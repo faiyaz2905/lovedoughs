@@ -4,6 +4,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Fonts loaded via <link> in __root.tsx to avoid Lightning CSS network @import */
+
 /*
  * Design system definition.
  *
