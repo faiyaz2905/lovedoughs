@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StoryRouteImport } from './routes/story'
+import { Route as GiftRouteImport } from './routes/gift'
 import { Route as FlavorsRouteImport } from './routes/flavors'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FlavorsSlugRouteImport } from './routes/flavors.$slug'
@@ -17,6 +18,11 @@ import { Route as FlavorsSlugRouteImport } from './routes/flavors.$slug'
 const StoryRoute = StoryRouteImport.update({
   id: '/story',
   path: '/story',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiftRoute = GiftRouteImport.update({
+  id: '/gift',
+  path: '/gift',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FlavorsRoute = FlavorsRouteImport.update({
@@ -38,12 +44,14 @@ const FlavorsSlugRoute = FlavorsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/flavors': typeof FlavorsRouteWithChildren
+  '/gift': typeof GiftRoute
   '/story': typeof StoryRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/flavors': typeof FlavorsRouteWithChildren
+  '/gift': typeof GiftRoute
   '/story': typeof StoryRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/flavors': typeof FlavorsRouteWithChildren
+  '/gift': typeof GiftRoute
   '/story': typeof StoryRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/flavors' | '/story' | '/flavors/$slug'
+  fullPaths: '/' | '/flavors' | '/gift' | '/story' | '/flavors/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/flavors' | '/story' | '/flavors/$slug'
-  id: '__root__' | '/' | '/flavors' | '/story' | '/flavors/$slug'
+  to: '/' | '/flavors' | '/gift' | '/story' | '/flavors/$slug'
+  id: '__root__' | '/' | '/flavors' | '/gift' | '/story' | '/flavors/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FlavorsRoute: typeof FlavorsRouteWithChildren
+  GiftRoute: typeof GiftRoute
   StoryRoute: typeof StoryRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       path: '/story'
       fullPath: '/story'
       preLoaderRoute: typeof StoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gift': {
+      id: '/gift'
+      path: '/gift'
+      fullPath: '/gift'
+      preLoaderRoute: typeof GiftRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/flavors': {
@@ -115,8 +132,19 @@ const FlavorsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FlavorsRoute: FlavorsRouteWithChildren,
+  GiftRoute: GiftRoute,
   StoryRoute: StoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
