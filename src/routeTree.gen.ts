@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StoryRouteImport } from './routes/story'
 import { Route as FlavorsRouteImport } from './routes/flavors'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FlavorsSlugRouteImport } from './routes/flavors.$slug'
 
+const StoryRoute = StoryRouteImport.update({
+  id: '/story',
+  path: '/story',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FlavorsRoute = FlavorsRouteImport.update({
   id: '/flavors',
   path: '/flavors',
@@ -32,34 +38,45 @@ const FlavorsSlugRoute = FlavorsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/flavors': typeof FlavorsRouteWithChildren
+  '/story': typeof StoryRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/flavors': typeof FlavorsRouteWithChildren
+  '/story': typeof StoryRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/flavors': typeof FlavorsRouteWithChildren
+  '/story': typeof StoryRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/flavors' | '/flavors/$slug'
+  fullPaths: '/' | '/flavors' | '/story' | '/flavors/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/flavors' | '/flavors/$slug'
-  id: '__root__' | '/' | '/flavors' | '/flavors/$slug'
+  to: '/' | '/flavors' | '/story' | '/flavors/$slug'
+  id: '__root__' | '/' | '/flavors' | '/story' | '/flavors/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FlavorsRoute: typeof FlavorsRouteWithChildren
+  StoryRoute: typeof StoryRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/story': {
+      id: '/story'
+      path: '/story'
+      fullPath: '/story'
+      preLoaderRoute: typeof StoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/flavors': {
       id: '/flavors'
       path: '/flavors'
@@ -98,7 +115,18 @@ const FlavorsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FlavorsRoute: FlavorsRouteWithChildren,
+  StoryRoute: StoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
