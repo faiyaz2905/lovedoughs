@@ -33,7 +33,7 @@ function Index() {
             <span className="italic">that loves you back.</span>
           </h2>
           <p className="mt-6 max-w-xl font-body text-base text-chocolate/80 md:text-lg">
-            Both tins are 320g of soft, safe-to-eat dough. Heat-treated flour, no raw eggs, real butter. Eat it cold. Or bake it. We won't tell.
+            Both tins are 500g of soft, safe-to-eat dough. Heat-treated flour, no raw eggs, real butter. Eat it cold. Or bake it. We won't tell.
           </p>
         </div>
 
@@ -51,7 +51,7 @@ function Index() {
           <div>
             <SectionLabel>Our (short) story</SectionLabel>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-tight text-chocolate md:text-5xl">
-              Started in a Dhanmondi kitchen, with one stubborn rolling pin and a soft spot for dessert at midnight.
+              Started in a Dhaka kitchen, with one stubborn rolling pin and a soft spot for dessert at midnight.
             </h2>
             <p className="mt-6 max-w-lg font-body text-lg leading-relaxed text-chocolate/80">
               We couldn't find a single tin of edible cookie dough in Dhaka — so we made one. Two flavours, a gold tin, a red ribbon, and a recipe we've been quietly perfecting for two years.

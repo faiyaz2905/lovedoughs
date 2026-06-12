@@ -16,7 +16,7 @@ export function Footer() {
             <span className="font-display text-2xl font-bold">Love Doughs</span>
           </div>
           <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-blush/80">
-            Tinned cookie dough, baked with love in a small kitchen in Dhanmondi.
+            Tinned cookie dough, baked with love in a small kitchen in Dhaka.
             Made in tiny batches. Always tied with a red ribbon.
           </p>
         </div>
