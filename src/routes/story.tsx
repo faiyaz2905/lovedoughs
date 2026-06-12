@@ -73,11 +73,8 @@ function StoryPage() {
           Ready for a spoonful?
         </h2>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          {products.map((p) => (
-            <LinkBtn key={p.slug} to="/flavors/$slug" variant={p.accent === "velvet" ? "secondary" : "primary"}>
-              {p.name} tin
-            </LinkBtn>
-          ))}
+          <LinkBtn to="/flavors">See both tins</LinkBtn>
+          <LinkBtn to="/order" variant="secondary">Order now</LinkBtn>
         </div>
       </section>
     </PageShell>
