@@ -3,7 +3,7 @@ import { PageShell } from "@/components/PageShell";
 import { SectionLabel } from "@/components/SectionLabel";
 import { LinkBtn } from "@/components/Button";
 import { HeartDoodle, Sparkle, WigglyArrow } from "@/components/Doodles";
-import { products } from "@/lib/products";
+
 
 export const Route = createFileRoute("/story")({
   head: () => ({
