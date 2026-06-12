@@ -8,7 +8,7 @@ export const Route = createFileRoute("/flavors")({
   head: () => ({
     meta: [
       { title: "Flavors — Love Doughs" },
-      { name: "description", content: "Two cookie dough tins. Chocolate Chip and Red Velvet. 320g each, ribbon-tied, made in tiny batches in Dhaka." },
+      { name: "description", content: "Two cookie dough tins. Chocolate Chip and Red Velvet. 500g each, ribbon-tied, made in tiny batches in Dhaka." },
       { property: "og:title", content: "Flavors — Love Doughs" },
       { property: "og:description", content: "Two tins. One ribbon each. Pick your dough." },
     ],

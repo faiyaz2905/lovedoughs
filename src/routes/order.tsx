@@ -73,7 +73,7 @@ function OrderPage() {
               <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Tasnim" className={inputCx} required />
             </Field>
             <Field label="Delivery area (Dhaka)">
-              <input value={area} onChange={(e) => setArea(e.target.value)} placeholder="Dhanmondi 27" className={inputCx} required />
+              <input value={area} onChange={(e) => setArea(e.target.value)} placeholder="Gulshan 1" className={inputCx} required />
             </Field>
             <Field label="Note for the tin (optional)">
               <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder="Happy birthday, Mishu!" className={inputCx + " resize-y"} />

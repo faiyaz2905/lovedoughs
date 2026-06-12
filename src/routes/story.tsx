@@ -9,7 +9,7 @@ export const Route = createFileRoute("/story")({
   head: () => ({
     meta: [
       { title: "Our Story — Love Doughs" },
-      { name: "description", content: "How a Dhanmondi kitchen and one stubborn rolling pin turned into Bangladesh's first cookie dough tin brand." },
+      { name: "description", content: "How a Dhaka kitchen and one stubborn rolling pin turned into Bangladesh's first cookie dough tin brand." },
       { property: "og:title", content: "Our Story — Love Doughs" },
       { property: "og:description", content: "Tinned cookie dough, baked with love in Dhaka." },
     ],
@@ -23,7 +23,7 @@ function StoryPage() {
       <section className="mx-auto max-w-3xl px-6 pb-12 pt-28 text-center lg:px-12">
         <SectionLabel>Our story</SectionLabel>
         <h1 className="mt-4 font-display text-5xl font-bold leading-[1] text-chocolate md:text-7xl">
-          A scoop, <span className="italic">a ribbon,</span> a kitchen in <span className="doodle-underline">Dhanmondi.</span>
+          A scoop, <span className="italic">a ribbon,</span> a kitchen in <span className="doodle-underline">Dhaka.</span>
         </h1>
       </section>
 
@@ -36,7 +36,7 @@ function StoryPage() {
           So in early 2024, we started baking. Heat-treated flour batch after batch. Egg-free formulas that still tasted like the real thing. Soft enough to eat with a spoon, firm enough to bake into proper cookies if you wanted to. Two flavours felt right — chocolate chip for the classics, red velvet for the romantics.
         </p>
         <p className="mt-6">
-          Every tin is filled by hand in our small kitchen, weighed to 320 grams, sealed, and tied with a single red ribbon. We don't keep things on a shelf. We bake to order, in tiny batches, and deliver across Dhaka within 24 hours.
+          Every tin is filled by hand in our small kitchen, weighed to 500 grams, sealed, and tied with a single red ribbon. We don't keep things on a shelf. We bake to order, in tiny batches, and deliver across Dhaka within 24 hours.
         </p>
         <p className="mt-6">
           That's the whole story. There's no big factory, no investor deck, no five-flavour roadmap. Just two tins, made with love, baked with dough.

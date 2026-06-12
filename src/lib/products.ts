@@ -26,7 +26,7 @@ export const products: Product[] = [
     longDescription:
       "Heat-treated flour. Pasteurized egg-free base. Real butter. Dark chocolate from our favourite Dhaka chocolatier, folded by hand. Eat it cold from the tin with a spoon, or bake a few scoops at 180°C for eight minutes — both are correct answers.",
     flavorTags: ["Dark Chocolate Chips", "Slow-drizzled Ganache", "Brown Butter Base"],
-    weight: "320g",
+    weight: "500g",
     price: 850,
     scoopCopy: "a scoop of this, pls",
     accent: "chocolate",
@@ -43,7 +43,7 @@ export const products: Product[] = [
     longDescription:
       "Real cocoa, a whisper of vanilla, and proper white chocolate chunks. Same heat-treated flour and egg-free base — safe to eat by the spoonful, beautiful baked into puffy cookies. A gift that arrives already wearing a red ribbon.",
     flavorTags: ["White Chocolate Chunks", "Cocoa Red Velvet", "Vanilla Bean"],
-    weight: "320g",
+    weight: "500g",
     price: 900,
     scoopCopy: "this one's for love",
     accent: "velvet",
