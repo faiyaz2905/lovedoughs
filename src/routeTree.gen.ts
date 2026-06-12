@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as FlavorsRouteImport } from './routes/flavors'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FlavorsSlugRouteImport } from './routes/flavors.$slug'
 
 const FlavorsRoute = FlavorsRouteImport.update({
   id: '/flavors',
@@ -22,31 +23,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FlavorsSlugRoute = FlavorsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => FlavorsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/flavors': typeof FlavorsRoute
+  '/flavors': typeof FlavorsRouteWithChildren
+  '/flavors/$slug': typeof FlavorsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/flavors': typeof FlavorsRoute
+  '/flavors': typeof FlavorsRouteWithChildren
+  '/flavors/$slug': typeof FlavorsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/flavors': typeof FlavorsRoute
+  '/flavors': typeof FlavorsRouteWithChildren
+  '/flavors/$slug': typeof FlavorsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/flavors'
+  fullPaths: '/' | '/flavors' | '/flavors/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/flavors'
-  id: '__root__' | '/' | '/flavors'
+  to: '/' | '/flavors' | '/flavors/$slug'
+  id: '__root__' | '/' | '/flavors' | '/flavors/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  FlavorsRoute: typeof FlavorsRoute
+  FlavorsRoute: typeof FlavorsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +74,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/flavors/$slug': {
+      id: '/flavors/$slug'
+      path: '/$slug'
+      fullPath: '/flavors/$slug'
+      preLoaderRoute: typeof FlavorsSlugRouteImport
+      parentRoute: typeof FlavorsRoute
+    }
   }
 }
 
+interface FlavorsRouteChildren {
+  FlavorsSlugRoute: typeof FlavorsSlugRoute
+}
+
+const FlavorsRouteChildren: FlavorsRouteChildren = {
+  FlavorsSlugRoute: FlavorsSlugRoute,
+}
+
+const FlavorsRouteWithChildren =
+  FlavorsRoute._addFileChildren(FlavorsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  FlavorsRoute: FlavorsRoute,
+  FlavorsRoute: FlavorsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
