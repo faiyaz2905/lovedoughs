@@ -92,7 +92,7 @@ function ProductPage() {
           <p className="mt-4 font-display text-2xl italic text-caramel">{product.tagline}</p>
 
           <div className="mt-8 flex flex-wrap gap-2">
-            {product.flavorTags.map((t) => (
+            {product.flavorTags.map((t: string) => (
               <span key={t} className="rounded-full bg-blush px-3 py-1.5 font-body text-xs font-medium text-chocolate">{t}</span>
             ))}
           </div>
