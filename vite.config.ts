@@ -6,6 +6,6 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
-  // Force-enable Nitro server compilation for external hosting (Vercel, Netlify, Cloudflare, etc.)
-  nitro: true,
+  // Force-enable Nitro server compilation targeting Vercel's serverless runtime.
+  nitro: { preset: "vercel" },
 });
