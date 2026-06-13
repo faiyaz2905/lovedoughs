@@ -14,6 +14,7 @@ import { Route as OrderRouteImport } from './routes/order'
 import { Route as GiftRouteImport } from './routes/gift'
 import { Route as FlavorsRouteImport } from './routes/flavors'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as IndexOldRouteImport } from './routes/index.old'
 import { Route as FlavorsSlugRouteImport } from './routes/flavors.$slug'
 
 const StoryRoute = StoryRouteImport.update({
@@ -41,6 +42,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexOldRoute = IndexOldRouteImport.update({
+  id: '/index/old',
+  path: '/index/old',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FlavorsSlugRoute = FlavorsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/order': typeof OrderRoute
   '/story': typeof StoryRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
+  '/index/old': typeof IndexOldRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/order': typeof OrderRoute
   '/story': typeof StoryRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
+  '/index/old': typeof IndexOldRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,12 +79,27 @@ export interface FileRoutesById {
   '/order': typeof OrderRoute
   '/story': typeof StoryRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
+  '/index/old': typeof IndexOldRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/flavors' | '/gift' | '/order' | '/story' | '/flavors/$slug'
+  fullPaths:
+    | '/'
+    | '/flavors'
+    | '/gift'
+    | '/order'
+    | '/story'
+    | '/flavors/$slug'
+    | '/index/old'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/flavors' | '/gift' | '/order' | '/story' | '/flavors/$slug'
+  to:
+    | '/'
+    | '/flavors'
+    | '/gift'
+    | '/order'
+    | '/story'
+    | '/flavors/$slug'
+    | '/index/old'
   id:
     | '__root__'
     | '/'
@@ -85,6 +108,7 @@ export interface FileRouteTypes {
     | '/order'
     | '/story'
     | '/flavors/$slug'
+    | '/index/old'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,6 +117,7 @@ export interface RootRouteChildren {
   GiftRoute: typeof GiftRoute
   OrderRoute: typeof OrderRoute
   StoryRoute: typeof StoryRoute
+  IndexOldRoute: typeof IndexOldRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -132,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/index/old': {
+      id: '/index/old'
+      path: '/index/old'
+      fullPath: '/index/old'
+      preLoaderRoute: typeof IndexOldRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/flavors/$slug': {
       id: '/flavors/$slug'
       path: '/$slug'
@@ -159,7 +191,18 @@ const rootRouteChildren: RootRouteChildren = {
   GiftRoute: GiftRoute,
   OrderRoute: OrderRoute,
   StoryRoute: StoryRoute,
+  IndexOldRoute: IndexOldRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

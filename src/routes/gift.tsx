@@ -1,10 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { SectionLabel } from "@/components/SectionLabel";
 import { LinkBtn, ExtBtn } from "@/components/Button";
-import { products, waLink } from "@/lib/products";
-import { HeartDoodle, Sparkle } from "@/components/Doodles";
-import { Phone } from "lucide-react";
+import { products, instaLink, type Product } from "@/lib/products";
+import { HeartDoodle, Sparkle, HappyStarDoodle, HappyCookieDoodle } from "@/components/Doodles";
+import { Instagram } from "lucide-react";
 
 export const Route = createFileRoute("/gift")({
   head: () => ({
@@ -19,6 +20,9 @@ export const Route = createFileRoute("/gift")({
 });
 
 function GiftPage() {
+  const [copied, setCopied] = useState(false);
+  const giftMessage = "Hi Love Doughs! I'd like to send a gift tin. Here's what I'm thinking…";
+
   return (
     <PageShell>
       <section className="mx-auto max-w-4xl px-6 pb-12 pt-28 text-center lg:px-12">
@@ -44,19 +48,29 @@ function GiftPage() {
         ))}
       </section>
 
-      <section className="relative bg-cream py-24">
+      <section className="relative bg-cream py-24 overflow-hidden">
         <Sparkle className="absolute left-12 top-12 h-8 w-8 text-gold" />
         <HeartDoodle className="absolute right-16 bottom-16 h-10 w-10 text-velvet/50" />
+        <HappyStarDoodle className="absolute left-[8%] bottom-6 h-20 w-20 text-gold/60 hidden md:block" />
+        <HappyCookieDoodle className="absolute right-[8%] top-6 h-20 w-20 text-chocolate/40 hidden md:block" />
         <div className="mx-auto max-w-3xl px-6 text-center lg:px-12">
           <h2 className="font-display text-4xl font-semibold text-chocolate md:text-5xl">
             Send one in three taps.
           </h2>
           <p className="mt-4 font-body text-lg text-chocolate/75">
-            Message us on WhatsApp with the flavour, recipient address, delivery date, and your note. We confirm within an hour.
+            Message us on Instagram with the flavour, recipient address, delivery date, and your note. We confirm within an hour.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <ExtBtn href={waLink("Hi Love Doughs! I'd like to send a gift tin. Here's what I'm thinking…")}>
-              <Phone className="h-4 w-4" strokeWidth={1.8} /> Send via WhatsApp
+            <ExtBtn
+              href={instaLink()}
+              onClick={() => {
+                navigator.clipboard.writeText(giftMessage);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2500);
+              }}
+            >
+              <Instagram className="h-4 w-4" strokeWidth={1.8} />
+              {copied ? "Details copied! Opening Instagram..." : "Send via Instagram"}
             </ExtBtn>
             <LinkBtn to="/flavors" variant="secondary">Browse flavours</LinkBtn>
           </div>
@@ -66,16 +80,45 @@ function GiftPage() {
       <section className="mx-auto max-w-6xl px-6 py-20 lg:px-12">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {products.map((p) => (
-            <div key={p.slug} className="overflow-hidden rounded-2xl bg-white shadow-md">
-              <img src={p.imageUrl} alt={p.imageAlt} className="aspect-[5/4] w-full object-cover" />
-              <div className="p-6">
-                <h3 className="font-display text-2xl text-chocolate">{p.name} — ৳{p.price}</h3>
-                <p className="mt-2 text-sm text-chocolate/70">{p.tagline}</p>
-              </div>
-            </div>
+            <GiftProductCard key={p.slug} product={p} />
           ))}
         </div>
       </section>
     </PageShell>
+  );
+}
+
+function GiftProductCard({ product }: { product: Product }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <Link
+      to="/flavors/$slug"
+      params={{ slug: product.slug }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
+      className="group relative block overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgba(71,26,20,0.08)] transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_24px_56px_rgba(71,26,20,0.18)]"
+    >
+      <div className="relative aspect-[5/4] overflow-hidden bg-blush">
+        <img
+          src={hover ? product.imageOpenedUrl : product.imageClosedUrl}
+          alt={product.imageAlt}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+        />
+        {product.accent === "velvet" && (
+          <span className="absolute left-6 top-6 -rotate-[4deg] rounded-sm bg-velvet px-3 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.18em] text-white shadow-md">
+            New
+          </span>
+        )}
+      </div>
+      <div className="p-6">
+        <h3 className="font-display text-2xl font-semibold text-chocolate group-hover:text-caramel transition-colors">
+          {product.name} — ৳{product.price}
+        </h3>
+        <p className="mt-2 font-body text-sm text-chocolate/75">{product.tagline}</p>
+      </div>
+    </Link>
   );
 }

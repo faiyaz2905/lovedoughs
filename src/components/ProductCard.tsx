@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { Product } from "@/lib/products";
 import { Spoon, Sparkle, HeartDoodle } from "./Doodles";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function ProductCard({ product }: { product: Product }) {
   const [hover, setHover] = useState(false);
@@ -20,24 +21,38 @@ export function ProductCard({ product }: { product: Product }) {
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-blush">
         <img
-          src={product.imageUrl}
+          src={hover ? product.imageOpenedUrl : product.imageClosedUrl}
           alt={product.imageAlt}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
         />
-        <div
+        <motion.div
           aria-hidden="true"
-          className={`pointer-events-none absolute right-6 top-6 text-chocolate transition-all duration-700 ease-out ${hover ? "translate-x-0 rotate-0 opacity-100" : "translate-x-12 -rotate-45 opacity-0"}`}
+          className="pointer-events-none absolute right-12 top-1/3 text-chocolate"
+          initial={{ x: 100, y: -40, rotate: -45, opacity: 0 }}
+          animate={
+            hover
+              ? { x: -60, y: 0, rotate: -15, opacity: 1 }
+              : { x: 100, y: -40, rotate: -45, opacity: 0 }
+          }
+          transition={{ type: "spring", stiffness: 120, damping: 14 }}
         >
           <Spoon className="h-16 w-16" />
-        </div>
-        <div
+        </motion.div>
+        <motion.div
           aria-hidden="true"
-          className={`pointer-events-none absolute bottom-6 left-6 max-w-[60%] rounded-2xl rounded-bl-sm bg-white px-4 py-2 font-display text-base italic shadow-md transition-all duration-500 ${hover ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
+          className="pointer-events-none absolute bottom-6 left-6 max-w-[60%] rounded-2xl rounded-bl-sm bg-white px-4 py-2 font-display text-base italic shadow-md"
           style={{ color: accentColor }}
+          initial={{ y: 20, opacity: 0, scale: 0.9 }}
+          animate={
+            hover
+              ? { y: 0, opacity: 1, scale: 1 }
+              : { y: 20, opacity: 0, scale: 0.9 }
+          }
+          transition={{ type: "spring", stiffness: 200, damping: 15, delay: hover ? 0.2 : 0 }}
         >
           {product.scoopCopy}
-        </div>
+        </motion.div>
         {product.accent === "velvet" && (
           <span className="absolute left-6 top-6 -rotate-[4deg] rounded-sm bg-velvet px-3 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.18em] text-white shadow-md">
             New

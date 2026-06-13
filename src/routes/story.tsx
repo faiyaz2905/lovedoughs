@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { SectionLabel } from "@/components/SectionLabel";
 import { LinkBtn } from "@/components/Button";
-import { HeartDoodle, Sparkle, WigglyArrow } from "@/components/Doodles";
+import { HeartDoodle, Sparkle, WigglyArrow, FlowerDoodle, HappyCookieDoodle } from "@/components/Doodles";
 
 
 export const Route = createFileRoute("/story")({
@@ -29,6 +29,8 @@ function StoryPage() {
 
       <section className="relative mx-auto max-w-3xl px-6 pb-16 font-body text-lg leading-[1.8] text-chocolate/85 lg:px-12">
         <HeartDoodle className="absolute -left-4 top-0 h-6 w-6 text-velvet" />
+        <FlowerDoodle className="absolute -right-24 top-[15%] h-20 w-20 text-chocolate/35 hidden xl:block" />
+        <HappyCookieDoodle className="absolute -left-28 top-[60%] h-20 w-20 text-chocolate/35 hidden xl:block" />
         <p>
           Love Doughs started the way most good things start in this city: at midnight, with someone craving a dessert that didn't exist here yet. We'd been eating spoonfuls of raw-style cookie dough on every trip abroad and wondering, every time, why nobody in Dhaka was selling it.
         </p>

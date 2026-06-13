@@ -9,12 +9,15 @@ export type Product = {
   price: number;
   scoopCopy: string;
   accent: "chocolate" | "velvet";
-  imageUrl: string;
+  imageClosedUrl: string;
+  imageOpenedUrl: string;
   imageAlt: string;
 };
 
-import cc from "@/assets/chocolate-chip.png.asset.json";
-import rv from "@/assets/red-velvet.png.asset.json";
+import ccClosed from "@/assets/Choco Chip Closed.png";
+import ccOpened from "@/assets/Choco Chip Opened.png";
+import rvClosed from "@/assets/Red Velvet Closed.png";
+import rvOpened from "@/assets/Red Velvet Opened.png";
 
 export const products: Product[] = [
   {
@@ -30,9 +33,10 @@ export const products: Product[] = [
     price: 850,
     scoopCopy: "a scoop of this, pls",
     accent: "chocolate",
-    imageUrl: cc.url,
+    imageClosedUrl: ccClosed,
+    imageOpenedUrl: ccOpened,
     imageAlt:
-      "Open gold tin of Love Doughs Chocolate Chip cookie dough with a red ribbon, scooped with a spoon and finished with a pool of dark chocolate, set on a blush pink background.",
+      "Gold tin of Love Doughs Chocolate Chip cookie dough with a red ribbon, on a blush pink background.",
   },
   {
     slug: "red-velvet",
@@ -44,18 +48,18 @@ export const products: Product[] = [
       "Real cocoa, a whisper of vanilla, and proper white chocolate chunks. Same heat-treated flour and egg-free base — safe to eat by the spoonful, beautiful baked into puffy cookies. A gift that arrives already wearing a red ribbon.",
     flavorTags: ["White Chocolate Chunks", "Cocoa Red Velvet", "Vanilla Bean"],
     weight: "500g",
-    price: 900,
+    price: 1000,
     scoopCopy: "this one's for love",
     accent: "velvet",
-    imageUrl: rv.url,
+    imageClosedUrl: rvClosed,
+    imageOpenedUrl: rvOpened,
     imageAlt:
-      "Open gold tin of Love Doughs Red Velvet cookie dough with a red ribbon, scooped with a spoon, white chocolate chips dotted through the deep red dough, on a blush pink background.",
+      "Gold tin of Love Doughs Red Velvet cookie dough with a red ribbon, on a blush pink background.",
   },
 ];
 
 export const productBySlug = (slug: string) =>
   products.find((p) => p.slug === slug);
 
-export const WHATSAPP_NUMBER = "8801700000000";
-export const waLink = (msg: string) =>
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+export const INSTAGRAM_HANDLE = "love.doughs";
+export const instaLink = () => `https://www.instagram.com/${INSTAGRAM_HANDLE}/`;

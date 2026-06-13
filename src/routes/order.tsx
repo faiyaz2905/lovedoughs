@@ -3,14 +3,15 @@ import { useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { SectionLabel } from "@/components/SectionLabel";
 import { ExtBtn } from "@/components/Button";
-import { products, waLink } from "@/lib/products";
-import { Phone, Check } from "lucide-react";
+import { products, instaLink, INSTAGRAM_HANDLE } from "@/lib/products";
+import { Instagram, Check } from "lucide-react";
+import { HappyCupDoodle, HappyStarDoodle } from "@/components/Doodles";
 
 export const Route = createFileRoute("/order")({
   head: () => ({
     meta: [
       { title: "Order — Love Doughs" },
-      { name: "description", content: "Order your Love Doughs tin. Pick a flavour, fill the form, we confirm on WhatsApp within an hour." },
+      { name: "description", content: `Order your Love Doughs tin. Pick a flavour, fill the form, we confirm on Instagram @${INSTAGRAM_HANDLE} within an hour.` },
       { property: "og:title", content: "Order — Love Doughs" },
       { property: "og:description", content: "Cookie dough tins delivered across Dhaka." },
     ],
@@ -25,20 +26,23 @@ function OrderPage() {
   const [area, setArea] = useState("");
   const [note, setNote] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [imageHover, setImageHover] = useState(false);
   const product = products.find((p) => p.slug === slug)!;
   const total = product.price * qty;
   const message = `Hi Love Doughs! New order:\n• Flavour: ${product.name}\n• Quantity: ${qty}\n• Name: ${name || "—"}\n• Delivery area (Dhaka): ${area || "—"}\n• Note: ${note || "—"}\n• Total: ৳${total}`;
 
   return (
     <PageShell>
-      <section className="mx-auto max-w-6xl px-6 pb-20 pt-28 lg:px-12">
+      <section className="mx-auto max-w-6xl px-6 pb-20 pt-28 lg:px-12 relative">
+        <HappyCupDoodle className="absolute left-[-2%] top-[35%] h-20 w-20 text-chocolate/35 hidden xl:block" />
+        <HappyStarDoodle className="absolute right-[-2%] bottom-[25%] h-20 w-20 text-gold/60 hidden xl:block" />
         <div className="text-center">
           <SectionLabel>Order a tin</SectionLabel>
           <h1 className="mt-4 font-display text-5xl font-bold text-chocolate md:text-6xl">
             One short form. <span className="italic">One sweet tin.</span>
           </h1>
           <p className="mx-auto mt-4 max-w-lg font-body text-base text-chocolate/75">
-            We confirm every order on WhatsApp. Delivery across Dhaka within 24 hours of confirmation.
+            We confirm every order on Instagram. Delivery across Dhaka within 24 hours of confirmation.
           </p>
         </div>
 
@@ -79,21 +83,42 @@ function OrderPage() {
               <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder="Happy birthday, Mishu!" className={inputCx + " resize-y"} />
             </Field>
 
-            <ExtBtn href={waLink(message)} className="w-full" onClick={() => setSubmitted(true)}>
-              <Phone className="h-4 w-4" strokeWidth={1.8} />
-              Send order on WhatsApp · ৳{total}
+            <ExtBtn
+              href={instaLink()}
+              className="w-full"
+              onClick={() => {
+                navigator.clipboard.writeText(message);
+                setSubmitted(true);
+              }}
+            >
+              <Instagram className="h-4 w-4" strokeWidth={1.8} />
+              Send order on Instagram · ৳{total}
             </ExtBtn>
 
             {submitted && (
-              <div className="flex items-center gap-2 rounded-xl bg-cream px-4 py-3 font-body text-sm text-chocolate">
-                <Check className="h-4 w-4 text-caramel" /> WhatsApp opened. We'll confirm within an hour. 🍪
+              <div className="flex flex-col gap-1 rounded-xl bg-cream px-4 py-3 font-body text-sm text-chocolate">
+                <div className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-caramel" />
+                  Order details copied!
+                </div>
+                <p className="text-xs text-chocolate/70 pl-6">
+                  We've opened Instagram. Paste the details in a DM to @{INSTAGRAM_HANDLE} to confirm. 🍪
+                </p>
               </div>
             )}
           </form>
 
           <aside className="rounded-2xl bg-cream p-6">
-            <div className="overflow-hidden rounded-xl">
-              <img src={product.imageUrl} alt={product.imageAlt} className="aspect-[4/5] w-full object-cover" />
+            <div
+              className="overflow-hidden rounded-xl bg-blush relative aspect-[4/5]"
+              onMouseEnter={() => setImageHover(true)}
+              onMouseLeave={() => setImageHover(false)}
+            >
+              <img
+                src={imageHover ? product.imageOpenedUrl : product.imageClosedUrl}
+                alt={product.imageAlt}
+                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out hover:scale-105"
+              />
             </div>
             <h3 className="mt-4 font-display text-2xl text-chocolate">{product.name}</h3>
             <p className="mt-1 text-sm italic text-caramel">{product.tagline}</p>

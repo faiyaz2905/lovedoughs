@@ -1,11 +1,12 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
-import { productBySlug, products, waLink } from "@/lib/products";
+import { productBySlug, products, instaLink, INSTAGRAM_HANDLE } from "@/lib/products";
 import { ExtBtn, LinkBtn } from "@/components/Button";
 import { SectionLabel } from "@/components/SectionLabel";
 import { Sparkle, HeartDoodle, WigglyArrow } from "@/components/Doodles";
-import { Phone } from "lucide-react";
+import { Instagram } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/flavors/$slug")({
   loader: ({ params }) => {
@@ -42,6 +43,7 @@ export const Route = createFileRoute("/flavors/$slug")({
 function ProductPage() {
   const { product } = Route.useLoaderData();
   const [lid, setLid] = useState(false);
+  const [copied, setCopied] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setLid(true), 600);
     return () => clearTimeout(t);
@@ -60,14 +62,20 @@ function ProductPage() {
             <Sparkle className="h-8 w-8" />
           </div>
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-blush shadow-[0_24px_64px_rgba(71,26,20,0.18)]">
-            <img src={product.imageUrl} alt={product.imageAlt} className="h-full w-full object-cover" />
-            {/* Lid lift overlay: a stylized golden lid that lifts off */}
-            <div
+            <img src={lid ? product.imageOpenedUrl : product.imageClosedUrl} alt={product.imageAlt} className="h-full w-full object-cover" />
+            <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-12 top-6 h-16 rounded-full bg-gradient-to-b from-gold via-gold/90 to-gold/60 shadow-lg transition-all duration-[1400ms] ease-out"
-              style={{
-                transform: lid ? "translateY(-180%) rotate(-12deg)" : "translateY(0)",
-                opacity: lid ? 0 : 1,
+              className="pointer-events-none absolute inset-x-12 top-6 h-16 rounded-full bg-gradient-to-b from-gold via-gold/90 to-gold/60 shadow-lg"
+              initial={{ y: 0, rotate: 0, opacity: 1 }}
+              animate={
+                lid
+                  ? { y: -200, rotate: -15, opacity: 0 }
+                  : { y: 0, rotate: 0, opacity: 1 }
+              }
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 20,
               }}
             />
             <span className="absolute bottom-4 right-4 rounded-full bg-white/90 px-3 py-1 font-body text-xs font-semibold uppercase tracking-[0.18em] text-chocolate shadow">
@@ -106,9 +114,16 @@ function ProductPage() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <ExtBtn href={waLink(message)}>
-              <Phone className="h-4 w-4" strokeWidth={1.8} />
-              Order on WhatsApp
+            <ExtBtn
+              href={instaLink()}
+              onClick={() => {
+                navigator.clipboard.writeText(message);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2500);
+              }}
+            >
+              <Instagram className="h-4 w-4" strokeWidth={1.8} />
+              {copied ? "Order copied! Opening Instagram..." : "Order on Instagram"}
             </ExtBtn>
             <LinkBtn to="/order" variant="secondary">Use the order form</LinkBtn>
           </div>
@@ -125,7 +140,7 @@ function ProductPage() {
           <WigglyArrow className="absolute right-12 top-12 hidden h-14 w-32 -rotate-12 text-caramel md:block" />
           <SectionLabel>The other tin, while you're here</SectionLabel>
           <div className="mt-6 flex flex-col items-start gap-8 md:flex-row md:items-center">
-            <img src={other.imageUrl} alt={other.imageAlt} className="h-44 w-36 rounded-2xl object-cover shadow-md" />
+            <img src={other.imageClosedUrl} alt={other.imageAlt} className="h-44 w-36 rounded-2xl object-cover shadow-md" />
             <div className="flex-1">
               <h3 className="font-display text-3xl font-semibold text-chocolate md:text-5xl">{other.name}</h3>
               <p className="mt-2 font-display text-lg italic text-caramel">{other.tagline}</p>

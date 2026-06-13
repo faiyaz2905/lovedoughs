@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Phone } from "lucide-react";
-import { CookieLogo, HeartDoodle } from "./Doodles";
-import { WHATSAPP_NUMBER } from "@/lib/products";
+import { Instagram } from "lucide-react";
+import { HeartDoodle } from "./Doodles";
+import { INSTAGRAM_HANDLE, instaLink } from "@/lib/products";
+import logoUrl from "@/assets/Love Doughs logo.svg";
 
 export function Footer() {
   return (
@@ -11,9 +12,8 @@ export function Footer() {
       </div>
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-20 md:grid-cols-3 lg:px-12">
         <div>
-          <div className="flex items-center gap-3">
-            <CookieLogo className="h-12 w-12" />
-            <span className="font-display text-2xl font-bold">Love Doughs</span>
+          <div className="flex items-center">
+            <img src={logoUrl} alt="Love Doughs" className="h-12 w-auto object-contain brightness-0 invert" />
           </div>
           <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-blush/80">
             Tinned cookie dough, baked with love in a small kitchen in Dhaka.
@@ -35,15 +35,9 @@ export function Footer() {
           <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-gold">Say hi</h4>
           <ul className="mt-4 space-y-3 font-body text-base">
             <li>
-              <a href="https://instagram.com/lovedoughs" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold">
+              <a href={instaLink()} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold">
                 <Instagram className="h-4 w-4" strokeWidth={1.5} />
-                @lovedoughs
-              </a>
-            </li>
-            <li>
-              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold">
-                <Phone className="h-4 w-4" strokeWidth={1.5} />
-                WhatsApp orders
+                @{INSTAGRAM_HANDLE}
               </a>
             </li>
             <li className="text-sm text-blush/70">Dhaka, Bangladesh</li>
