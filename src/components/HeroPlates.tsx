@@ -132,10 +132,12 @@ export function HeroPlates() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8, duration: 0.8 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 font-body text-xs uppercase tracking-[0.28em] text-chocolate/40"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 font-body text-xs uppercase text-chocolate/40"
       >
         <span className="h-px w-8 bg-chocolate/20" />
-        tap to explore
+        <span className="tracking-[0.28em] mr-[-0.28em] leading-none">
+          tap to explore
+        </span>
         <span className="h-px w-8 bg-chocolate/20" />
       </motion.div>
     </section>
