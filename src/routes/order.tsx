@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { SectionLabel } from "@/components/SectionLabel";
 import { ExtBtn } from "@/components/Button";
@@ -7,6 +7,7 @@ import { products, instaLink, INSTAGRAM_HANDLE } from "@/lib/products";
 import { Instagram, Check } from "lucide-react";
 import { HappyCupDoodle, HappyStarDoodle } from "@/components/Doodles";
 import { canonicalLink, DEFAULT_OG_IMAGE, absoluteUrl, DHAKA_AREAS } from "@/lib/site";
+import { getUnusedCoupons, loadProfile } from "@/lib/tradecookies/storage";
 
 export const Route = createFileRoute("/order")({
   head: () => ({
@@ -37,11 +38,32 @@ function OrderPage() {
   const [name, setName] = useState("");
   const [area, setArea] = useState("");
   const [note, setNote] = useState("");
+  const [couponCode, setCouponCode] = useState("");
+  const [savedCoupons, setSavedCoupons] = useState<
+    { code: string; takaValue: number; label: string }[]
+  >([]);
   const [submitted, setSubmitted] = useState(false);
   const [imageHover, setImageHover] = useState(false);
   const product = products.find((p) => p.slug === slug)!;
   const total = product.price * qty;
-  const message = `Hi Love Doughs! New order:\n• Flavour: ${product.name}\n• Quantity: ${qty}\n• Name: ${name || "—"}\n• Delivery area (Dhaka): ${area || "—"}\n• Note: ${note || "—"}\n• Total: ৳${total}`;
+  const message = [
+    "Hi Love Doughs! New order:",
+    `• Flavour: ${product.name}`,
+    `• Quantity: ${qty}`,
+    `• Name: ${name || "—"}`,
+    `• Delivery area (Dhaka): ${area || "—"}`,
+    `• Note: ${note || "—"}`,
+    couponCode.trim() ? `• Trade Cookies code: ${couponCode.trim()}` : null,
+    `• Total: ৳${total}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  useEffect(() => {
+    const unused = getUnusedCoupons(loadProfile());
+    setSavedCoupons(unused);
+    if (unused.length === 1) setCouponCode(unused[0].code);
+  }, []);
 
   return (
     <PageShell>
@@ -61,11 +83,16 @@ function OrderPage() {
 
         <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-[1fr_360px]">
           <form
-            onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSubmitted(true);
+            }}
             className="space-y-6 rounded-2xl bg-white p-8 shadow-[0_8px_24px_rgba(71,26,20,0.08)]"
           >
             <div>
-              <label className="mb-2 block font-body text-xs font-semibold uppercase tracking-[0.2em] text-caramel">Flavour</label>
+              <label className="mb-2 block font-body text-xs font-semibold uppercase tracking-[0.2em] text-caramel">
+                Flavour
+              </label>
               <div className="grid grid-cols-2 gap-3">
                 {products.map((p) => (
                   <button
@@ -73,21 +100,38 @@ function OrderPage() {
                     key={p.slug}
                     onClick={() => setSlug(p.slug)}
                     className={`rounded-xl border-2 p-4 text-left transition-all ${
-                      slug === p.slug ? "border-chocolate bg-blush" : "border-border-subtle bg-white hover:border-caramel"
+                      slug === p.slug
+                        ? "border-chocolate bg-blush"
+                        : "border-border-subtle bg-white hover:border-caramel"
                     }`}
                   >
                     <div className="font-display text-lg font-semibold text-chocolate">{p.name}</div>
-                    <div className="font-body text-xs text-chocolate/70">৳{p.price} · {p.weight}</div>
+                    <div className="font-body text-xs text-chocolate/70">
+                      ৳{p.price} · {p.weight}
+                    </div>
                   </button>
                 ))}
               </div>
             </div>
 
             <Field label="Quantity">
-              <input type="number" min={1} max={20} value={qty} onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))} className={inputCx} />
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={qty}
+                onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))}
+                className={inputCx}
+              />
             </Field>
             <Field label="Your name">
-              <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Tasnim" className={inputCx} required />
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Tasnim"
+                className={inputCx}
+                required
+              />
             </Field>
             <Field label="Delivery area (Dhaka)">
               <input
@@ -105,7 +149,36 @@ function OrderPage() {
               </datalist>
             </Field>
             <Field label="Note for the tin (optional)">
-              <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder="Happy birthday, Mishu!" className={inputCx + " resize-y"} />
+              <textarea
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                rows={3}
+                placeholder="Happy birthday, Mishu!"
+                className={inputCx + " resize-y"}
+              />
+            </Field>
+            <Field label="Trade Cookies code (optional)">
+              <input
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                placeholder="LD-60-K7Q2"
+                list="trade-coupons"
+                className={inputCx}
+              />
+              {savedCoupons.length > 0 && (
+                <>
+                  <datalist id="trade-coupons">
+                    {savedCoupons.map((c) => (
+                      <option key={c.code} value={c.code}>
+                        {c.label} · ৳{c.takaValue}
+                      </option>
+                    ))}
+                  </datalist>
+                  <p className="mt-2 font-body text-xs text-chocolate/60">
+                    Saved from Trade Cookies: {savedCoupons.map((c) => c.code).join(", ")}
+                  </p>
+                </>
+              )}
             </Field>
 
             <ExtBtn
@@ -127,7 +200,8 @@ function OrderPage() {
                   Order details copied!
                 </div>
                 <p className="text-xs text-chocolate/70 pl-6">
-                  We've opened Instagram. Paste the details in a DM to @{INSTAGRAM_HANDLE} to confirm. 🍪
+                  We&apos;ve opened Instagram. Paste the details in a DM to @{INSTAGRAM_HANDLE} to
+                  confirm. 🍪
                 </p>
               </div>
             )}
@@ -150,11 +224,22 @@ function OrderPage() {
             <h3 className="mt-4 font-display text-2xl text-chocolate">{product.name}</h3>
             <p className="mt-1 text-sm italic text-caramel">{product.tagline}</p>
             <dl className="mt-4 space-y-2 font-body text-sm text-chocolate/80">
-              <div className="flex justify-between"><dt>Tin</dt><dd>৳{product.price}</dd></div>
-              <div className="flex justify-between"><dt>Quantity</dt><dd>× {qty}</dd></div>
-              <div className="flex justify-between border-t border-border-subtle pt-2 font-display text-base font-semibold text-chocolate"><dt>Total</dt><dd>৳{total}</dd></div>
+              <div className="flex justify-between">
+                <dt>Tin</dt>
+                <dd>৳{product.price}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt>Quantity</dt>
+                <dd>× {qty}</dd>
+              </div>
+              <div className="flex justify-between border-t border-border-subtle pt-2 font-display text-base font-semibold text-chocolate">
+                <dt>Total</dt>
+                <dd>৳{total}</dd>
+              </div>
             </dl>
-            <p className="mt-4 text-xs text-chocolate/60">Cash on delivery, bKash, or Nagad on confirmation.</p>
+            <p className="mt-4 text-xs text-chocolate/60">
+              Cash on delivery, bKash, or Nagad on confirmation.
+            </p>
           </aside>
         </div>
       </section>
@@ -168,7 +253,9 @@ const inputCx =
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="mb-2 block font-body text-xs font-semibold uppercase tracking-[0.2em] text-caramel">{label}</label>
+      <label className="mb-2 block font-body text-xs font-semibold uppercase tracking-[0.2em] text-caramel">
+        {label}
+      </label>
       {children}
     </div>
   );

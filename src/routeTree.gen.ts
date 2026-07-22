@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TradecookiesRouteImport } from './routes/tradecookies'
 import { Route as StoryRouteImport } from './routes/story'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as GiftRouteImport } from './routes/gift'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as IndexOldRouteImport } from './routes/index.old'
 import { Route as FlavorsSlugRouteImport } from './routes/flavors.$slug'
 
+const TradecookiesRoute = TradecookiesRouteImport.update({
+  id: '/tradecookies',
+  path: '/tradecookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StoryRoute = StoryRouteImport.update({
   id: '/story',
   path: '/story',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/gift': typeof GiftRoute
   '/order': typeof OrderRoute
   '/story': typeof StoryRoute
+  '/tradecookies': typeof TradecookiesRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
   '/index/old': typeof IndexOldRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/gift': typeof GiftRoute
   '/order': typeof OrderRoute
   '/story': typeof StoryRoute
+  '/tradecookies': typeof TradecookiesRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
   '/index/old': typeof IndexOldRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/gift': typeof GiftRoute
   '/order': typeof OrderRoute
   '/story': typeof StoryRoute
+  '/tradecookies': typeof TradecookiesRoute
   '/flavors/$slug': typeof FlavorsSlugRoute
   '/index/old': typeof IndexOldRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/gift'
     | '/order'
     | '/story'
+    | '/tradecookies'
     | '/flavors/$slug'
     | '/index/old'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/gift'
     | '/order'
     | '/story'
+    | '/tradecookies'
     | '/flavors/$slug'
     | '/index/old'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/gift'
     | '/order'
     | '/story'
+    | '/tradecookies'
     | '/flavors/$slug'
     | '/index/old'
   fileRoutesById: FileRoutesById
@@ -117,11 +129,19 @@ export interface RootRouteChildren {
   GiftRoute: typeof GiftRoute
   OrderRoute: typeof OrderRoute
   StoryRoute: typeof StoryRoute
+  TradecookiesRoute: typeof TradecookiesRoute
   IndexOldRoute: typeof IndexOldRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tradecookies': {
+      id: '/tradecookies'
+      path: '/tradecookies'
+      fullPath: '/tradecookies'
+      preLoaderRoute: typeof TradecookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/story': {
       id: '/story'
       path: '/story'
@@ -191,6 +211,7 @@ const rootRouteChildren: RootRouteChildren = {
   GiftRoute: GiftRoute,
   OrderRoute: OrderRoute,
   StoryRoute: StoryRoute,
+  TradecookiesRoute: TradecookiesRoute,
   IndexOldRoute: IndexOldRoute,
 }
 export const routeTree = rootRouteImport
