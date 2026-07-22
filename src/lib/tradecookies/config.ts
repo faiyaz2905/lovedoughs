@@ -8,11 +8,13 @@ export const STACK_COOLDOWN_MS = 25 * 60 * 60 * 1000;
 export const REDEEM_LOCK_MS = 7 * 24 * 60 * 60 * 1000;
 export const STORAGE_KEY = "love-doughs-tradecookies-v1";
 
-/** sites → chips; round UP to nearest 10. 1 chip = ৳1 */
+/** sites → chips; round to nearest 10 with ≤5 down, ≥6 up (85→80, 86→90). 1 chip = ৳1 */
 export function sitesToChips(sites: number): number {
   if (!Number.isFinite(sites) || sites < 0) return 0;
   const raw = sites / 10 + 20;
-  return Math.ceil(raw / 10) * 10;
+  const base = Math.floor(raw / 10) * 10;
+  const rem = raw - base;
+  return rem <= 5 ? base : base + 10;
 }
 
 export function formatDuration(ms: number): string {
