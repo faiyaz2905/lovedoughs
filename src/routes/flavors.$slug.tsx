@@ -7,6 +7,13 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { Sparkle, HeartDoodle, WigglyArrow } from "@/components/Doodles";
 import { Instagram } from "lucide-react";
 import { motion } from "framer-motion";
+import {
+  absoluteUrl,
+  canonicalLink,
+  jsonLdScript,
+  DEFAULT_OG_IMAGE,
+} from "@/lib/site";
+import { productSchema, breadcrumbSchema } from "@/lib/schema";
 
 export const Route = createFileRoute("/flavors/$slug")({
   loader: ({ params }) => {
@@ -17,14 +24,33 @@ export const Route = createFileRoute("/flavors/$slug")({
   head: ({ loaderData }) => {
     const p = loaderData?.product;
     if (!p) return { meta: [{ title: "Flavor — Love Doughs" }] };
+    const path = `/flavors/${p.slug}`;
+    const ogImage = absoluteUrl(p.imageClosedUrl) || DEFAULT_OG_IMAGE;
+    const title = `${p.name} Cookie Dough Tin | Love Doughs Dhaka`;
     return {
       meta: [
-        { title: `${p.name} Tin — Love Doughs` },
+        { title },
         { name: "description", content: p.description },
-        { property: "og:title", content: `${p.name} — Love Doughs` },
+        { property: "og:title", content: title },
         { property: "og:description", content: p.description },
-        { property: "og:image", content: p.imageUrl },
-        { name: "twitter:image", content: p.imageUrl },
+        { property: "og:url", content: absoluteUrl(path) },
+        { property: "og:image", content: ogImage },
+        { property: "og:type", content: "product" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: p.description },
+        { name: "twitter:image", content: ogImage },
+      ],
+      links: [canonicalLink(path)],
+      scripts: [
+        jsonLdScript([
+          productSchema(p),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Flavours", path: "/flavors" },
+            { name: p.name, path },
+          ]),
+        ]),
       ],
     };
   },
@@ -56,13 +82,18 @@ function ProductPage() {
   return (
     <PageShell>
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 pb-20 pt-20 md:grid-cols-2 md:gap-16 md:pt-28 lg:px-12">
-        {/* Product image + lid lift */}
         <div className="relative">
           <div className="absolute -left-4 -top-6 text-caramel">
             <Sparkle className="h-8 w-8" />
           </div>
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-blush shadow-[0_24px_64px_rgba(71,26,20,0.18)]">
-            <img src={lid ? product.imageOpenedUrl : product.imageClosedUrl} alt={product.imageAlt} className="h-full w-full object-cover" />
+            <img
+              src={lid ? product.imageOpenedUrl : product.imageClosedUrl}
+              alt={product.imageAlt}
+              width={800}
+              height={1000}
+              className="h-full w-full object-cover"
+            />
             <motion.div
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-12 top-6 h-16 rounded-full bg-gradient-to-b from-gold via-gold/90 to-gold/60 shadow-lg"
@@ -91,7 +122,6 @@ function ProductPage() {
           </button>
         </div>
 
-        {/* Details */}
         <div className="flex flex-col justify-center">
           <SectionLabel>{product.accent === "velvet" ? "Red Velvet Tin" : "Chocolate Chip Tin"}</SectionLabel>
           <h1 className={`mt-3 font-display text-5xl font-bold leading-[0.95] md:text-7xl ${accent}`}>
@@ -134,15 +164,20 @@ function ProductPage() {
         </div>
       </section>
 
-      {/* Cross-sell */}
       <section className="relative mx-auto max-w-7xl px-6 py-24 lg:px-12">
         <div className="relative overflow-hidden rounded-3xl bg-cream p-8 md:p-14">
           <WigglyArrow className="absolute right-12 top-12 hidden h-14 w-32 -rotate-12 text-caramel md:block" />
           <SectionLabel>The other tin, while you're here</SectionLabel>
           <div className="mt-6 flex flex-col items-start gap-8 md:flex-row md:items-center">
-            <img src={other.imageClosedUrl} alt={other.imageAlt} className="h-44 w-36 rounded-2xl object-cover shadow-md" />
+            <img
+              src={other.imageClosedUrl}
+              alt={other.imageAlt}
+              width={144}
+              height={176}
+              className="h-44 w-36 rounded-2xl object-cover shadow-md"
+            />
             <div className="flex-1">
-              <h3 className="font-display text-3xl font-semibold text-chocolate md:text-5xl">{other.name}</h3>
+              <h2 className="font-display text-3xl font-semibold text-chocolate md:text-5xl">{other.name}</h2>
               <p className="mt-2 font-display text-lg italic text-caramel">{other.tagline}</p>
               <p className="mt-3 max-w-lg font-body text-base text-chocolate/75">{other.description}</p>
             </div>

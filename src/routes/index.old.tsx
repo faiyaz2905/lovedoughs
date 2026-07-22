@@ -7,11 +7,16 @@ import { LinkBtn } from "@/components/Button";
 import { SectionLabel } from "@/components/SectionLabel";
 import { Sparkle, HeartDoodle, WigglyArrow, HappyStarDoodle } from "@/components/Doodles";
 
-export const Route = createFileRoute("/index/old")(  {
+export const Route = createFileRoute("/index/old")({
   head: () => ({
     meta: [
       { title: "Love Doughs — Cookie Dough Tins, Made With Love in Dhaka" },
-      { name: "description", content: "Bangladesh's first edible cookie dough tins, ribbon-tied and gift-ready. Chocolate Chip and Red Velvet, made in tiny Dhaka batches." },
+      {
+        name: "description",
+        content:
+          "Bangladesh's first edible cookie dough tins, ribbon-tied and gift-ready. Chocolate Chip and Red Velvet, made in tiny Dhaka batches.",
+      },
+      { name: "robots", content: "noindex, nofollow" },
       { property: "og:title", content: "Love Doughs — Cookie Dough Tins" },
       { property: "og:description", content: "A scoop of dough, a ribbon on top." },
     ],

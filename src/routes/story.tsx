@@ -3,16 +3,33 @@ import { PageShell } from "@/components/PageShell";
 import { SectionLabel } from "@/components/SectionLabel";
 import { LinkBtn } from "@/components/Button";
 import { HeartDoodle, Sparkle, WigglyArrow, FlowerDoodle, HappyCookieDoodle } from "@/components/Doodles";
-
+import { canonicalLink, jsonLdScript, DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
+import { faqSchema, STORY_FAQS } from "@/lib/schema";
 
 export const Route = createFileRoute("/story")({
   head: () => ({
     meta: [
-      { title: "Our Story — Love Doughs" },
-      { name: "description", content: "How a Dhaka kitchen and one stubborn rolling pin turned into Bangladesh's first cookie dough tin brand." },
-      { property: "og:title", content: "Our Story — Love Doughs" },
-      { property: "og:description", content: "Tinned cookie dough, baked with love in Dhaka." },
+      { title: "Bangladesh's First Cookie Dough Tin Brand | Love Doughs" },
+      {
+        name: "description",
+        content:
+          "How a Dhaka kitchen turned into Bangladesh's first edible cookie dough tin brand — scoopable, safe to eat raw, ribbon-tied, and delivered across the city.",
+      },
+      {
+        property: "og:title",
+        content: "Bangladesh's First Cookie Dough Tin Brand | Love Doughs",
+      },
+      {
+        property: "og:description",
+        content: "Tinned scoopable cookie dough, baked with love in Dhaka.",
+      },
+      { property: "og:url", content: absoluteUrl("/story") },
+      { property: "og:image", content: DEFAULT_OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
+    links: [canonicalLink("/story")],
+    scripts: [jsonLdScript(faqSchema([...STORY_FAQS]))],
   }),
   component: StoryPage,
 });
@@ -41,7 +58,7 @@ function StoryPage() {
           Every tin is filled by hand in our small kitchen, weighed to 500 grams, sealed, and tied with a single red ribbon. We don't keep things on a shelf. We bake to order, in tiny batches, and deliver across Dhaka within 24 hours.
         </p>
         <p className="mt-6">
-          That's the whole story. There's no big factory, no investor deck, no five-flavour roadmap. Just two tins, made with love, baked with dough.
+          That's the whole story. There's no big factory, no investor deck, no five-flavour roadmap. Just two tins, made with love, baked with dough — Bangladesh's first home-grown bakery to serve edible cookie dough.
         </p>
         <Sparkle className="mx-auto mt-12 h-8 w-8 text-gold" />
       </section>
@@ -67,6 +84,27 @@ function StoryPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-3xl px-6 py-24 lg:px-12" id="faq">
+        <div className="text-center">
+          <SectionLabel>FAQ</SectionLabel>
+          <h2 className="mt-4 font-display text-4xl font-semibold text-chocolate md:text-5xl">
+            Scoopable answers.
+          </h2>
+        </div>
+        <dl className="mt-12 space-y-8">
+          {STORY_FAQS.map((faq) => (
+            <div key={faq.question}>
+              <dt className="font-display text-xl font-semibold text-chocolate md:text-2xl">
+                {faq.question}
+              </dt>
+              <dd className="mt-3 font-body text-base leading-relaxed text-chocolate/80">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <section className="relative mx-auto max-w-7xl px-6 py-24 text-center lg:px-12">

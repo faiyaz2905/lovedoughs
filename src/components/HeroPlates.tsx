@@ -3,16 +3,16 @@ import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Full (food visible) layers
-import tinCcFull from "@/assets/tin-cc-full.svg";
-import tinRvFull from "@/assets/tin-rv-full.svg";
-import spoonCcFull from "@/assets/spoon-cc-full.svg";
-import spoonRvFull from "@/assets/spoon-rv-full.svg";
+import tinCcFull from "@/assets/tin-cc-full.webp";
+import tinRvFull from "@/assets/tin-rv-full.webp";
+import spoonCcFull from "@/assets/spoon-cc-full.webp";
+import spoonRvFull from "@/assets/spoon-rv-full.webp";
 
 // Empty (food gone, text visible) layers
-import tinCcEmpty from "@/assets/tin-cc-empty.svg";
-import tinRvEmpty from "@/assets/tin-rv-empty.svg";
-import spoonCcEmpty from "@/assets/spoon-cc-empty.svg";
-import spoonRvEmpty from "@/assets/spoon-rv-empty.svg";
+import tinCcEmpty from "@/assets/tin-cc-empty.webp";
+import tinRvEmpty from "@/assets/tin-rv-empty.webp";
+import spoonCcEmpty from "@/assets/spoon-cc-empty.webp";
+import spoonRvEmpty from "@/assets/spoon-rv-empty.webp";
 
 type PlateItem = {
   id: string;
@@ -82,6 +82,15 @@ export function HeroPlates() {
 
       {/* Hero container — full viewport height */}
       <div className="relative h-[100svh] min-h-[600px] max-h-[1100px] w-full">
+        {/* SEO/GEO copy — visually hidden; crawlable H1 remains in the HTML */}
+        <div className="sr-only">
+          <h1>Edible cookie dough tins, made in Dhaka</h1>
+          <p>
+            Bangladesh&apos;s first scoopable cookie dough in a ribbon-tied gold tin.
+            Two flavours. Tiny batches. Gift-ready.
+          </p>
+        </div>
+
         {/* Tin CC: top-left, partially off-screen, large */}
         <PlateLink
           item={items[0]}
@@ -91,6 +100,7 @@ export function HeroPlates() {
           textRotationClass="rotate-[5deg]"
           textSizeClass="text-xl sm:text-2xl md:text-3xl lg:text-4xl"
           staggerIndex={0}
+          priority
         />
 
         {/* Spoon RV: nestled beside Tin CC on mobile (top-right/middle-right), and next to Tin RV on desktop (bottom-right area) */}
@@ -124,6 +134,7 @@ export function HeroPlates() {
           textRotationClass="rotate-[-6deg]"
           textSizeClass="text-xl sm:text-2xl md:text-3xl lg:text-4xl"
           staggerIndex={3}
+          priority
         />
       </div>
 
@@ -152,6 +163,7 @@ function PlateLink({
   textRotationClass = "",
   textSizeClass,
   staggerIndex,
+  priority = false,
 }: {
   item: PlateItem;
   className: string;
@@ -160,10 +172,13 @@ function PlateLink({
   textRotationClass?: string;
   textSizeClass: string;
   staggerIndex: number;
+  priority?: boolean;
 }) {
   const navigate = useNavigate();
   const [revealed, setRevealed] = useState(false);
   const [navigating, setNavigating] = useState(false);
+  const loading = priority ? "eager" : "lazy";
+  const fetchPriority = priority ? "high" : "auto";
 
   const handleClick = useCallback(() => {
     if (navigating) return;
@@ -222,8 +237,11 @@ function PlateLink({
           src={item.emptySrc}
           alt=""
           aria-hidden="true"
+          width={800}
+          height={800}
           className="absolute inset-0 h-full w-full object-contain drop-shadow-lg"
-          loading="eager"
+          loading={loading}
+          fetchPriority={fetchPriority}
           draggable={false}
         />
 
@@ -248,8 +266,11 @@ function PlateLink({
               key={`food-${item.id}`}
               src={item.fullSrc}
               alt={item.alt}
+              width={800}
+              height={800}
               className="absolute inset-0 h-full w-full object-contain drop-shadow-xl"
-              loading="eager"
+              loading={loading}
+              fetchPriority={fetchPriority}
               draggable={false}
               exit={{ opacity: 0, scale: 0.8, y: -30, rotate: -5 }}
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}

@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import logoUrl from "@/assets/Love Doughs logo.svg";
+import logoUrl from "@/assets/logo.webp";
 import { Menu, X } from "lucide-react";
 
 const links = [
@@ -64,6 +64,8 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
           <img
             src={logoUrl}
             alt="Love Doughs"
+            width={480}
+            height={240}
             className={`w-auto object-contain transition-all duration-300 ${
               minimal ? "h-16 md:h-[240px]" : "h-16 md:h-20"
             }`}

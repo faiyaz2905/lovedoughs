@@ -23,6 +23,8 @@ export function ProductCard({ product }: { product: Product }) {
         <img
           src={hover ? product.imageOpenedUrl : product.imageClosedUrl}
           alt={product.imageAlt}
+          width={800}
+          height={1000}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
         />

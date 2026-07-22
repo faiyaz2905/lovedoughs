@@ -6,15 +6,27 @@ import { ExtBtn } from "@/components/Button";
 import { products, instaLink, INSTAGRAM_HANDLE } from "@/lib/products";
 import { Instagram, Check } from "lucide-react";
 import { HappyCupDoodle, HappyStarDoodle } from "@/components/Doodles";
+import { canonicalLink, DEFAULT_OG_IMAGE, absoluteUrl, DHAKA_AREAS } from "@/lib/site";
 
 export const Route = createFileRoute("/order")({
   head: () => ({
     meta: [
-      { title: "Order — Love Doughs" },
-      { name: "description", content: `Order your Love Doughs tin. Pick a flavour, fill the form, we confirm on Instagram @${INSTAGRAM_HANDLE} within an hour.` },
-      { property: "og:title", content: "Order — Love Doughs" },
-      { property: "og:description", content: "Cookie dough tins delivered across Dhaka." },
+      { title: "Order Cookie Dough Tins | Love Doughs Dhaka" },
+      {
+        name: "description",
+        content: `Order edible cookie dough tins in Dhaka. Pick a flavour, fill the form, we confirm on Instagram @${INSTAGRAM_HANDLE} within an hour.`,
+      },
+      { property: "og:title", content: "Order Cookie Dough Tins | Love Doughs Dhaka" },
+      {
+        property: "og:description",
+        content: "Scoopable cookie dough tins delivered across Dhaka — Gulshan, Banani, Dhanmondi, and more.",
+      },
+      { property: "og:url", content: absoluteUrl("/order") },
+      { property: "og:image", content: DEFAULT_OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
+    links: [canonicalLink("/order")],
   }),
   component: OrderPage,
 });
@@ -42,7 +54,8 @@ function OrderPage() {
             One short form. <span className="italic">One sweet tin.</span>
           </h1>
           <p className="mx-auto mt-4 max-w-lg font-body text-base text-chocolate/75">
-            We confirm every order on Instagram. Delivery across Dhaka within 24 hours of confirmation.
+            We confirm every order on Instagram. Delivery across Dhaka within 24 hours of confirmation —
+            including {DHAKA_AREAS.slice(0, 6).join(", ")}, and nearby areas.
           </p>
         </div>
 
@@ -77,7 +90,19 @@ function OrderPage() {
               <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Tasnim" className={inputCx} required />
             </Field>
             <Field label="Delivery area (Dhaka)">
-              <input value={area} onChange={(e) => setArea(e.target.value)} placeholder="Gulshan 1" className={inputCx} required />
+              <input
+                value={area}
+                onChange={(e) => setArea(e.target.value)}
+                placeholder="e.g. Gulshan 1, Banani, Dhanmondi"
+                list="dhaka-areas"
+                className={inputCx}
+                required
+              />
+              <datalist id="dhaka-areas">
+                {DHAKA_AREAS.map((a) => (
+                  <option key={a} value={a} />
+                ))}
+              </datalist>
             </Field>
             <Field label="Note for the tin (optional)">
               <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder="Happy birthday, Mishu!" className={inputCx + " resize-y"} />
@@ -117,6 +142,8 @@ function OrderPage() {
               <img
                 src={imageHover ? product.imageOpenedUrl : product.imageClosedUrl}
                 alt={product.imageAlt}
+                width={800}
+                height={1000}
                 className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out hover:scale-105"
               />
             </div>

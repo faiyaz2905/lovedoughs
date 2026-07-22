@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /index/old
+
+Sitemap: https://lovedoughs.vercel.app/sitemap.xml

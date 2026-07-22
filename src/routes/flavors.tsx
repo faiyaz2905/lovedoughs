@@ -3,15 +3,30 @@ import { PageShell } from "@/components/PageShell";
 import { ProductCard } from "@/components/ProductCard";
 import { products } from "@/lib/products";
 import { SectionLabel } from "@/components/SectionLabel";
+import { canonicalLink, jsonLdScript, DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
+import { catalogItemListSchema } from "@/lib/schema";
 
 export const Route = createFileRoute("/flavors")({
   head: () => ({
     meta: [
-      { title: "Flavors — Love Doughs" },
-      { name: "description", content: "Two cookie dough tins. Chocolate Chip and Red Velvet. 500g each, ribbon-tied, made in tiny batches in Dhaka." },
-      { property: "og:title", content: "Flavors — Love Doughs" },
-      { property: "og:description", content: "Two tins. One ribbon each. Pick your dough." },
+      { title: "Scoopable Cookie Dough Flavours | Love Doughs" },
+      {
+        name: "description",
+        content:
+          "Two scoopable cookie dough tins: Chocolate Chip and Red Velvet. 500g each, ribbon-tied gold tins, made in tiny batches in Dhaka, Bangladesh.",
+      },
+      { property: "og:title", content: "Scoopable Cookie Dough Flavours | Love Doughs" },
+      {
+        property: "og:description",
+        content: "Two tins. One ribbon each. Pick your scoopable cookie dough.",
+      },
+      { property: "og:url", content: absoluteUrl("/flavors") },
+      { property: "og:image", content: DEFAULT_OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
+    links: [canonicalLink("/flavors")],
+    scripts: [jsonLdScript(catalogItemListSchema())],
   }),
   component: FlavorsLayout,
 });
@@ -33,7 +48,8 @@ function FlavorsIndex() {
             Two tins, <span className="italic">two moods.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl font-body text-lg text-chocolate/80">
-            Hover, tap, peek inside. Every tin is hand-scooped, ribbon-tied, and made for someone (maybe you).
+            Hover, tap, peek inside. Every tin is hand-scooped edible cookie dough,
+            ribbon-tied, and made for someone (maybe you).
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">

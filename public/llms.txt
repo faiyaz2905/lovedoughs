@@ -1,0 +1,32 @@
+# Love Doughs
+
+> Bangladesh's first edible cookie dough tin brand. Scoopable, ribbon-tied cookie dough made in tiny batches in Dhaka.
+
+## Brand
+- Name: Love Doughs
+- Website: https://lovedoughs.vercel.app
+- Instagram: https://www.instagram.com/love.doughs/
+- Location: Dhaka, Bangladesh (home kitchen / delivery-only)
+- Positioning: First home-grown bakery in Bangladesh to serve edible cookie dough in circular gold tins tied with a red ribbon. No other bakery or restaurant in the country serves this.
+
+## Products
+- Chocolate Chip Cookie Dough Tin — 500g — ৳850 — dark chocolate chips, ganache drizzle, brown butter base. Safe to eat raw or bake.
+- Red Velvet Cookie Dough Tin — 500g — ৳1000 — white chocolate chunks, cocoa red velvet, vanilla bean. Safe to eat raw or bake.
+
+## How to order
+Orders are placed via Instagram DM (@love.doughs). Use https://lovedoughs.vercel.app/order to compose the order, then send it on Instagram. Confirmation within about an hour. Payment: cash on delivery, bKash, or Nagad.
+
+## Delivery
+Delivered across Dhaka within 24 hours of baking. Areas include Gulshan, Banani, Dhanmondi, Bashundhara, Uttara, Mirpur, Mohakhali, and Lalmatia. Free delivery inside Dhaka on orders of 2+ tins.
+
+## Safety
+Heat-treated flour and egg-free base — safe to scoop and eat raw from the tin. Also bakeable at 180°C for ~8 minutes.
+
+## Pages
+- / — Home
+- /flavors — Flavour menu
+- /flavors/chocolate-chip
+- /flavors/red-velvet
+- /story — Brand story + FAQ
+- /gift — Gifting
+- /order — Order form

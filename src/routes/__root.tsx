@@ -11,6 +11,13 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import {
+  SITE_URL,
+  SITE_NAME,
+  DEFAULT_OG_IMAGE,
+  jsonLdScript,
+} from "../lib/site";
+import { organizationSchema, websiteSchema } from "../lib/schema";
 
 function NotFoundComponent() {
   return (
@@ -72,31 +79,58 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const gscToken = import.meta.env.VITE_GOOGLE_SITE_VERIFICATION as string | undefined;
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Love Doughs — Cookie Dough Tins, Made With Love in Dhaka" },
-      { name: "description", content: "Boutique edible cookie dough tins, gift-ready with a red ribbon. Two flavours: Chocolate Chip and Red Velvet. Delivered fresh across Dhaka." },
-      { name: "author", content: "Love Doughs" },
-      { property: "og:title", content: "Love Doughs — Cookie Dough Tins" },
-      { property: "og:description", content: "A scoop of dough, a ribbon on top. Bangladesh's first edible cookie dough tin." },
+      { title: "Cookie Dough Tins in Dhaka | Love Doughs" },
+      {
+        name: "description",
+        content:
+          "Bangladesh's first edible cookie dough tins — scoopable, ribbon-tied, and gift-ready. Chocolate Chip and Red Velvet, made in tiny Dhaka batches.",
+      },
+      { name: "author", content: SITE_NAME },
+      { name: "theme-color", content: "#FED2C7" },
+      ...(gscToken
+        ? [{ name: "google-site-verification", content: gscToken }]
+        : []),
+      { property: "og:title", content: "Cookie Dough Tins in Dhaka | Love Doughs" },
+      {
+        property: "og:description",
+        content:
+          "A scoop of dough, a ribbon on top. Bangladesh's first edible cookie dough tin brand.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@lovedoughs" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:image", content: DEFAULT_OG_IMAGE },
+      { property: "og:locale", content: "en_BD" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Cookie Dough Tins in Dhaka | Love Doughs" },
+      {
+        name: "twitter:description",
+        content:
+          "Scoopable cookie dough in ribbon-tied gold tins. Made in Dhaka. Order on Instagram @love.doughs.",
+      },
+      { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
       },
+    ],
+    scripts: [
+      jsonLdScript([organizationSchema(), websiteSchema()]),
     ],
   }),
   shellComponent: RootShell,

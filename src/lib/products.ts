@@ -14,10 +14,10 @@ export type Product = {
   imageAlt: string;
 };
 
-import ccClosed from "@/assets/Choco Chip Closed.png";
-import ccOpened from "@/assets/Choco Chip Opened.png";
-import rvClosed from "@/assets/Red Velvet Closed.png";
-import rvOpened from "@/assets/Red Velvet Opened.png";
+import ccClosed from "@/assets/choco-chip-closed.webp";
+import ccOpened from "@/assets/choco-chip-opened.webp";
+import rvClosed from "@/assets/red-velvet-closed.webp";
+import rvOpened from "@/assets/red-velvet-opened.webp";
 
 export const products: Product[] = [
   {

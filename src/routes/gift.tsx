@@ -6,15 +6,28 @@ import { LinkBtn, ExtBtn } from "@/components/Button";
 import { products, instaLink, type Product } from "@/lib/products";
 import { HeartDoodle, Sparkle, HappyStarDoodle, HappyCookieDoodle } from "@/components/Doodles";
 import { Instagram } from "lucide-react";
+import { canonicalLink, DEFAULT_OG_IMAGE, absoluteUrl, DHAKA_AREAS } from "@/lib/site";
 
 export const Route = createFileRoute("/gift")({
   head: () => ({
     meta: [
-      { title: "Gift This — Love Doughs" },
-      { name: "description", content: "Send a Love Doughs tin as a gift. Hand-tied red ribbon, a personal note, and same-day delivery across Dhaka." },
-      { property: "og:title", content: "Gift a Love Doughs tin" },
-      { property: "og:description", content: "Ribbon-tied cookie dough tins, delivered with your note." },
+      { title: "Gift Cookie Dough Tins in Dhaka | Love Doughs" },
+      {
+        name: "description",
+        content:
+          "Send a scoopable cookie dough tin as a gift in Dhaka. Hand-tied red ribbon, a personal note, and delivery across Gulshan, Banani, Dhanmondi, and more.",
+      },
+      { property: "og:title", content: "Gift Cookie Dough Tins in Dhaka | Love Doughs" },
+      {
+        property: "og:description",
+        content: "Ribbon-tied edible cookie dough tins, delivered with your note across Dhaka.",
+      },
+      { property: "og:url", content: absoluteUrl("/gift") },
+      { property: "og:image", content: DEFAULT_OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
+    links: [canonicalLink("/gift")],
   }),
   component: GiftPage,
 });
@@ -39,10 +52,13 @@ function GiftPage() {
         {[
           { t: "1. Pick a tin", b: "Chocolate Chip, Red Velvet, or one of each." },
           { t: "2. Tell us the note", b: "Birthday, apology, just-because — we write it in by hand." },
-          { t: "3. We deliver in Dhaka", b: "Choose a date. Tin arrives ribbon-tied, ready to give." },
+          {
+            t: "3. We deliver in Dhaka",
+            b: `Choose a date. Tin arrives ribbon-tied across ${DHAKA_AREAS.slice(0, 5).join(", ")}, and more.`,
+          },
         ].map((s) => (
           <div key={s.t} className="rounded-2xl bg-white p-8 shadow-[0_8px_24px_rgba(71,26,20,0.08)]">
-            <h3 className="font-display text-2xl text-chocolate">{s.t}</h3>
+            <h2 className="font-display text-2xl text-chocolate">{s.t}</h2>
             <p className="mt-3 font-body text-chocolate/75">{s.b}</p>
           </div>
         ))}
@@ -104,6 +120,8 @@ function GiftProductCard({ product }: { product: Product }) {
         <img
           src={hover ? product.imageOpenedUrl : product.imageClosedUrl}
           alt={product.imageAlt}
+          width={800}
+          height={640}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
         />
