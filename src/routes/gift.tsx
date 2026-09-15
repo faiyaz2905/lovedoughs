@@ -2,10 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { SectionLabel } from "@/components/SectionLabel";
-import { LinkBtn, ExtBtn } from "@/components/Button";
-import { products, instaLink, type Product } from "@/lib/products";
+import { LinkBtn } from "@/components/Button";
+import { products, type Product } from "@/lib/products";
 import { HeartDoodle, Sparkle, HappyStarDoodle, HappyCookieDoodle } from "@/components/Doodles";
-import { Instagram } from "lucide-react";
 import { canonicalLink, DEFAULT_OG_IMAGE, absoluteUrl, DHAKA_AREAS } from "@/lib/site";
 
 export const Route = createFileRoute("/gift")({
@@ -33,9 +32,6 @@ export const Route = createFileRoute("/gift")({
 });
 
 function GiftPage() {
-  const [copied, setCopied] = useState(false);
-  const giftMessage = "Hi Love Doughs! I'd like to send a gift tin. Here's what I'm thinking…";
-
   return (
     <PageShell>
       <section className="mx-auto max-w-4xl px-6 pb-12 pt-28 text-center lg:px-12">
@@ -44,20 +40,27 @@ function GiftPage() {
           The tin <span className="italic">does the talking.</span>
         </h1>
         <p className="mx-auto mt-6 max-w-xl font-body text-lg text-chocolate/80">
-          Every order ships gift-ready: gold tin, red satin ribbon, a small note card with your message in our handwriting.
+          Every order ships gift-ready: gold tin, red satin ribbon, a small note card with your
+          message in our handwriting.
         </p>
       </section>
 
       <section className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 pb-16 md:grid-cols-3 lg:px-12">
         {[
           { t: "1. Pick a tin", b: "Chocolate Chip, Red Velvet, or one of each." },
-          { t: "2. Tell us the note", b: "Birthday, apology, just-because — we write it in by hand." },
+          {
+            t: "2. Tell us the note",
+            b: "Birthday, apology, just-because — we write it in by hand.",
+          },
           {
             t: "3. We deliver in Dhaka",
             b: `Choose a date. Tin arrives ribbon-tied across ${DHAKA_AREAS.slice(0, 5).join(", ")}, and more.`,
           },
         ].map((s) => (
-          <div key={s.t} className="rounded-2xl bg-white p-8 shadow-[0_8px_24px_rgba(71,26,20,0.08)]">
+          <div
+            key={s.t}
+            className="rounded-2xl bg-white p-8 shadow-[0_8px_24px_rgba(71,26,20,0.08)]"
+          >
             <h2 className="font-display text-2xl text-chocolate">{s.t}</h2>
             <p className="mt-3 font-body text-chocolate/75">{s.b}</p>
           </div>
@@ -74,21 +77,19 @@ function GiftPage() {
             Send one in three taps.
           </h2>
           <p className="mt-4 font-body text-lg text-chocolate/75">
-            Message us on Instagram with the flavour, recipient address, delivery date, and your note. We confirm within an hour.
+            Message us on Instagram with the flavour, recipient address, delivery date, and your
+            note. We confirm within an hour.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <ExtBtn
-              href={instaLink()}
-              onClick={() => {
-                navigator.clipboard.writeText(giftMessage);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2500);
-              }}
+            <a
+              href="/order?entry=gift_page"
+              className="inline-flex items-center justify-center gap-2 rounded-[10px] bg-chocolate px-8 py-3.5 font-body text-sm font-semibold tracking-wide text-white shadow-[0_4px_16px_rgba(71,26,20,0.18)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-caramel hover:shadow-[0_10px_24px_rgba(71,26,20,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-caramel focus-visible:ring-offset-2 focus-visible:ring-offset-blush"
             >
-              <Instagram className="h-4 w-4" strokeWidth={1.8} />
-              {copied ? "Details copied! Opening Instagram..." : "Send via Instagram"}
-            </ExtBtn>
-            <LinkBtn to="/flavors" variant="secondary">Browse flavours</LinkBtn>
+              Start a gift order
+            </a>
+            <LinkBtn to="/flavors" variant="secondary">
+              Browse flavours
+            </LinkBtn>
           </div>
         </div>
       </section>

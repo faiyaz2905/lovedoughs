@@ -58,8 +58,7 @@ export const products: Product[] = [
   },
 ];
 
-export const productBySlug = (slug: string) =>
-  products.find((p) => p.slug === slug);
+export const productBySlug = (slug: string) => products.find((p) => p.slug === slug);
 
 export const INSTAGRAM_HANDLE = "love.doughs";
 export const instaLink = () => `https://www.instagram.com/${INSTAGRAM_HANDLE}/`;

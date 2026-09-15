@@ -24,3 +24,12 @@ export function getServerConfig() {
     //   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   };
 }
+
+/** Server-only Google Sheets configuration for customer order records. */
+export function getGoogleSheetsOrderConfig() {
+  return {
+    spreadsheetId: process.env.GOOGLE_SHEETS_ID,
+    serviceAccountJson: process.env.GOOGLE_SERVICE_ACCOUNT_JSON,
+    ordersTab: process.env.GOOGLE_SHEETS_ORDERS_TAB ?? "Orders",
+  };
+}

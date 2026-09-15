@@ -2,7 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { SectionLabel } from "@/components/SectionLabel";
 import { LinkBtn } from "@/components/Button";
-import { HeartDoodle, Sparkle, WigglyArrow, FlowerDoodle, HappyCookieDoodle } from "@/components/Doodles";
+import {
+  HeartDoodle,
+  Sparkle,
+  WigglyArrow,
+  FlowerDoodle,
+  HappyCookieDoodle,
+} from "@/components/Doodles";
 import { canonicalLink, jsonLdScript, DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
 import { faqSchema, STORY_FAQS } from "@/lib/schema";
 
@@ -40,7 +46,8 @@ function StoryPage() {
       <section className="mx-auto max-w-3xl px-6 pb-12 pt-28 text-center lg:px-12">
         <SectionLabel>Our story</SectionLabel>
         <h1 className="mt-4 font-display text-5xl font-bold leading-[1] text-chocolate md:text-7xl">
-          A scoop, <span className="italic">a ribbon,</span> a kitchen in <span className="doodle-underline">Dhaka.</span>
+          A scoop, <span className="italic">a ribbon,</span> a kitchen in{" "}
+          <span className="doodle-underline">Dhaka.</span>
         </h1>
       </section>
 
@@ -49,16 +56,26 @@ function StoryPage() {
         <FlowerDoodle className="absolute -right-24 top-[15%] h-20 w-20 text-chocolate/35 hidden xl:block" />
         <HappyCookieDoodle className="absolute -left-28 top-[60%] h-20 w-20 text-chocolate/35 hidden xl:block" />
         <p>
-          Love Doughs started the way most good things start in this city: at midnight, with someone craving a dessert that didn't exist here yet. We'd been eating spoonfuls of raw-style cookie dough on every trip abroad and wondering, every time, why nobody in Dhaka was selling it.
+          Love Doughs started the way most good things start in this city: at midnight, with someone
+          craving a dessert that didn't exist here yet. We'd been eating spoonfuls of raw-style
+          cookie dough on every trip abroad and wondering, every time, why nobody in Dhaka was
+          selling it.
         </p>
         <p className="mt-6">
-          So in early 2024, we started baking. Heat-treated flour batch after batch. Egg-free formulas that still tasted like the real thing. Soft enough to eat with a spoon, firm enough to bake into proper cookies if you wanted to. Two flavours felt right — chocolate chip for the classics, red velvet for the romantics.
+          So in early 2024, we started baking. Heat-treated flour batch after batch. Egg-free
+          formulas that still tasted like the real thing. Soft enough to eat with a spoon, firm
+          enough to bake into proper cookies if you wanted to. Two flavours felt right — chocolate
+          chip for the classics, red velvet for the romantics.
         </p>
         <p className="mt-6">
-          Every tin is filled by hand in our small kitchen, weighed to 500 grams, sealed, and tied with a single red ribbon. We don't keep things on a shelf. We bake to order, in tiny batches, and deliver across Dhaka within 24 hours.
+          Every tin is filled by hand in our small kitchen, weighed to 500 grams, sealed, and tied
+          with a single red ribbon. We don't keep things on a shelf. We bake to order, in tiny
+          batches, and deliver across Dhaka within 24 hours.
         </p>
         <p className="mt-6">
-          That's the whole story. There's no big factory, no investor deck, no five-flavour roadmap. Just two tins, made with love, baked with dough — Bangladesh's first home-grown bakery to serve edible cookie dough.
+          That's the whole story. There's no big factory, no investor deck, no five-flavour roadmap.
+          Just two tins, made with love, baked with dough — Bangladesh's first home-grown bakery to
+          serve edible cookie dough.
         </p>
         <Sparkle className="mx-auto mt-12 h-8 w-8 text-gold" />
       </section>
@@ -73,11 +90,23 @@ function StoryPage() {
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
-              { title: "Safe to eat raw", body: "Heat-treated flour and zero raw eggs. Dig in straight from the tin." },
-              { title: "Real ingredients", body: "Real butter, real cocoa, real chocolate from local makers. Nothing pretending." },
-              { title: "Baked to order", body: "Tins are made the day we deliver. Never sat on a shelf. Never frozen." },
+              {
+                title: "Safe to eat raw",
+                body: "Heat-treated flour and zero raw eggs. Dig in straight from the tin.",
+              },
+              {
+                title: "Real ingredients",
+                body: "Real butter, real cocoa, real chocolate from local makers. Nothing pretending.",
+              },
+              {
+                title: "Baked to order",
+                body: "Tins are made the day we deliver. Never sat on a shelf. Never frozen.",
+              },
             ].map((c) => (
-              <div key={c.title} className="relative rounded-2xl border border-border-subtle bg-white p-8 shadow-[0_8px_24px_rgba(71,26,20,0.08)]">
+              <div
+                key={c.title}
+                className="relative rounded-2xl border border-border-subtle bg-white p-8 shadow-[0_8px_24px_rgba(71,26,20,0.08)]"
+              >
                 <h3 className="font-display text-2xl font-semibold text-chocolate">{c.title}</h3>
                 <p className="mt-3 font-body text-base text-chocolate/75">{c.body}</p>
               </div>
@@ -114,7 +143,9 @@ function StoryPage() {
         </h2>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <LinkBtn to="/flavors">See both tins</LinkBtn>
-          <LinkBtn to="/order" variant="secondary">Order now</LinkBtn>
+          <LinkBtn to="/order" variant="secondary">
+            Order now
+          </LinkBtn>
         </div>
       </section>
     </PageShell>

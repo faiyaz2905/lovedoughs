@@ -102,8 +102,7 @@ export function ResultsDialog({
             Balance
           </p>
           <p className="mt-1 font-display text-4xl font-semibold text-chocolate">
-            {profile.chips}{" "}
-            <span className="text-xl text-caramel">chips · ৳{profile.chips}</span>
+            {profile.chips} <span className="text-xl text-caramel">chips · ৳{profile.chips}</span>
           </p>
           <ul className="mt-3 space-y-1 font-body text-sm text-chocolate/75">
             <li>
@@ -172,9 +171,7 @@ export function ResultsDialog({
                 <Btn
                   type="button"
                   variant="secondary"
-                  onClick={() =>
-                    handleRedeem(profile.chips, `৳${profile.chips} off any tin`)
-                  }
+                  onClick={() => handleRedeem(profile.chips, `৳${profile.chips} off any tin`)}
                 >
                   Redeem all · ৳{profile.chips} off
                 </Btn>
@@ -182,9 +179,7 @@ export function ResultsDialog({
               {progress.canFreeChoco && (
                 <Btn
                   type="button"
-                  onClick={() =>
-                    handleRedeem(FREE_CHOCO_CHIPS, "Free Chocolate Chip tin")
-                  }
+                  onClick={() => handleRedeem(FREE_CHOCO_CHIPS, "Free Chocolate Chip tin")}
                 >
                   Free Chocolate Chip tin (৳{FREE_CHOCO_CHIPS})
                 </Btn>
@@ -192,9 +187,7 @@ export function ResultsDialog({
               {progress.canFreeRedVelvet && (
                 <Btn
                   type="button"
-                  onClick={() =>
-                    handleRedeem(FREE_RED_VELVET_CHIPS, "Free Red Velvet tin")
-                  }
+                  onClick={() => handleRedeem(FREE_RED_VELVET_CHIPS, "Free Red Velvet tin")}
                 >
                   Free Red Velvet tin (৳{FREE_RED_VELVET_CHIPS})
                 </Btn>

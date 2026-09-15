@@ -1,10 +1,4 @@
-import {
-  SITE_URL,
-  SITE_NAME,
-  absoluteUrl,
-  DHAKA_AREAS,
-  DEFAULT_OG_IMAGE,
-} from "./site";
+import { SITE_URL, SITE_NAME, absoluteUrl, DHAKA_AREAS, DEFAULT_OG_IMAGE } from "./site";
 import { products, INSTAGRAM_HANDLE, type Product } from "./products";
 
 const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}/`;
@@ -93,9 +87,7 @@ export function productSchema(product: Product) {
   };
 }
 
-export function breadcrumbSchema(
-  items: { name: string; path: string }[],
-) {
+export function breadcrumbSchema(items: { name: string; path: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -108,9 +100,7 @@ export function breadcrumbSchema(
   };
 }
 
-export function faqSchema(
-  faqs: { question: string; answer: string }[],
-) {
+export function faqSchema(faqs: { question: string; answer: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",

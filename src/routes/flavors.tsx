@@ -48,8 +48,8 @@ function FlavorsIndex() {
             Two tins, <span className="italic">two moods.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl font-body text-lg text-chocolate/80">
-            Hover, tap, peek inside. Every tin is hand-scooped edible cookie dough,
-            ribbon-tied, and made for someone (maybe you).
+            Hover, tap, peek inside. Every tin is hand-scooped edible cookie dough, ribbon-tied, and
+            made for someone (maybe you).
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">

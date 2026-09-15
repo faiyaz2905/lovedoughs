@@ -1,7 +1,8 @@
 /** Canonical production host. Override with VITE_SITE_URL when a custom domain is ready. */
-export const SITE_URL = (
-  import.meta.env.VITE_SITE_URL ?? "https://lovedoughs.vercel.app"
-).replace(/\/$/, "");
+export const SITE_URL = (import.meta.env.VITE_SITE_URL ?? "https://lovedoughs.vercel.app").replace(
+  /\/$/,
+  "",
+);
 
 export const SITE_NAME = "Love Doughs";
 

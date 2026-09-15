@@ -43,9 +43,7 @@ const inputCx =
 
 function TradeCookiesPage() {
   const [profile, setProfile] = useState<TradeProfile>(() =>
-    typeof window !== "undefined"
-      ? loadProfile()
-      : { chips: 0, submissions: [], coupons: [] },
+    typeof window !== "undefined" ? loadProfile() : { chips: 0, submissions: [], coupons: [] },
   );
   const [file, setFile] = useState<File | null>(null);
   const [ocr, setOcr] = useState<OcrParseResult | null>(null);
@@ -225,9 +223,7 @@ function TradeCookiesPage() {
               className="block w-full font-body text-sm text-chocolate file:mr-4 file:rounded-[10px] file:border-0 file:bg-blush file:px-4 file:py-2 file:font-semibold file:text-chocolate"
               disabled={busy || showConfirm}
             />
-            {file && (
-              <p className="mt-2 font-body text-xs text-chocolate/60">{file.name}</p>
-            )}
+            {file && <p className="mt-2 font-body text-xs text-chocolate/60">{file.name}</p>}
           </div>
 
           {showConfirm && (
@@ -280,17 +276,13 @@ function TradeCookiesPage() {
           )}
 
           <Btn type="submit" className="w-full" disabled={busy}>
-            {busy
-              ? "Reading screenshot…"
-              : showConfirm
-                ? "Trade for chips"
-                : "Upload & scan"}
+            {busy ? "Reading screenshot…" : showConfirm ? "Trade for chips" : "Upload & scan"}
           </Btn>
 
           <p className="font-body text-xs leading-relaxed text-chocolate/55">
             Screenshots stay on your device — nothing is uploaded to Love Doughs servers in this
-            MVP. Stacking: one trade every 25 hours. Redeeming a coupon pauses trades for 7 days.
-            We collect your email only when you redeem.
+            MVP. Stacking: one trade every 25 hours. Redeeming a coupon pauses trades for 7 days. We
+            collect your email only when you redeem.
           </p>
         </form>
       </section>

@@ -13,8 +13,9 @@ export function BrowserCookieGuide() {
         Last <span className="italic">24 hours</span> only.
       </h2>
       <p className="mt-2 font-body text-sm text-chocolate/75">
-        We detected <span className="font-semibold text-chocolate">{detected.label}</span>.
-        Switch below if that&apos;s wrong. Screenshot the past-day site count — hour or week windows get rejected.
+        We detected <span className="font-semibold text-chocolate">{detected.label}</span>. Switch
+        below if that&apos;s wrong. Screenshot the past-day site count — hour or week windows get
+        rejected.
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2">

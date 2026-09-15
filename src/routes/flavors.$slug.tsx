@@ -1,18 +1,12 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
-import { productBySlug, products, instaLink, INSTAGRAM_HANDLE } from "@/lib/products";
-import { ExtBtn, LinkBtn } from "@/components/Button";
+import { productBySlug, products } from "@/lib/products";
+import { LinkBtn } from "@/components/Button";
 import { SectionLabel } from "@/components/SectionLabel";
 import { Sparkle, HeartDoodle, WigglyArrow } from "@/components/Doodles";
-import { Instagram } from "lucide-react";
 import { motion } from "framer-motion";
-import {
-  absoluteUrl,
-  canonicalLink,
-  jsonLdScript,
-  DEFAULT_OG_IMAGE,
-} from "@/lib/site";
+import { absoluteUrl, canonicalLink, jsonLdScript, DEFAULT_OG_IMAGE } from "@/lib/site";
 import { productSchema, breadcrumbSchema } from "@/lib/schema";
 
 export const Route = createFileRoute("/flavors/$slug")({
@@ -60,7 +54,9 @@ export const Route = createFileRoute("/flavors/$slug")({
       <div className="mx-auto max-w-xl px-6 py-32 text-center">
         <h1 className="font-display text-4xl text-chocolate">That flavour isn't on the menu.</h1>
         <p className="mt-4 text-chocolate/70">We only do two, after all.</p>
-        <div className="mt-6"><LinkBtn to="/flavors">See both flavours</LinkBtn></div>
+        <div className="mt-6">
+          <LinkBtn to="/flavors">See both flavours</LinkBtn>
+        </div>
       </div>
     </PageShell>
   ),
@@ -69,7 +65,6 @@ export const Route = createFileRoute("/flavors/$slug")({
 function ProductPage() {
   const { product } = Route.useLoaderData();
   const [lid, setLid] = useState(false);
-  const [copied, setCopied] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setLid(true), 600);
     return () => clearTimeout(t);
@@ -77,7 +72,6 @@ function ProductPage() {
 
   const other = products.find((p) => p.slug !== product.slug)!;
   const accent = product.accent === "velvet" ? "text-velvet" : "text-chocolate";
-  const message = `Hi Love Doughs! I'd like to order the ${product.name} tin (${product.weight}, ৳${product.price}). Could you share delivery details?`;
 
   return (
     <PageShell>
@@ -98,11 +92,7 @@ function ProductPage() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-12 top-6 h-16 rounded-full bg-gradient-to-b from-gold via-gold/90 to-gold/60 shadow-lg"
               initial={{ y: 0, rotate: 0, opacity: 1 }}
-              animate={
-                lid
-                  ? { y: -200, rotate: -15, opacity: 0 }
-                  : { y: 0, rotate: 0, opacity: 1 }
-              }
+              animate={lid ? { y: -200, rotate: -15, opacity: 0 } : { y: 0, rotate: 0, opacity: 1 }}
               transition={{
                 type: "spring",
                 stiffness: 80,
@@ -123,39 +113,53 @@ function ProductPage() {
         </div>
 
         <div className="flex flex-col justify-center">
-          <SectionLabel>{product.accent === "velvet" ? "Red Velvet Tin" : "Chocolate Chip Tin"}</SectionLabel>
-          <h1 className={`mt-3 font-display text-5xl font-bold leading-[0.95] md:text-7xl ${accent}`}>
+          <SectionLabel>
+            {product.accent === "velvet" ? "Red Velvet Tin" : "Chocolate Chip Tin"}
+          </SectionLabel>
+          <h1
+            className={`mt-3 font-display text-5xl font-bold leading-[0.95] md:text-7xl ${accent}`}
+          >
             {product.name}
           </h1>
           <p className="mt-4 font-display text-2xl italic text-caramel">{product.tagline}</p>
 
           <div className="mt-8 flex flex-wrap gap-2">
             {product.flavorTags.map((t: string) => (
-              <span key={t} className="rounded-full bg-blush px-3 py-1.5 font-body text-xs font-medium text-chocolate">{t}</span>
+              <span
+                key={t}
+                className="rounded-full bg-blush px-3 py-1.5 font-body text-xs font-medium text-chocolate"
+              >
+                {t}
+              </span>
             ))}
           </div>
 
-          <p className="mt-8 font-body text-lg leading-relaxed text-chocolate/85">{product.description}</p>
-          <p className="mt-4 font-body text-base leading-relaxed text-chocolate/70">{product.longDescription}</p>
+          <p className="mt-8 font-body text-lg leading-relaxed text-chocolate/85">
+            {product.description}
+          </p>
+          <p className="mt-4 font-body text-base leading-relaxed text-chocolate/70">
+            {product.longDescription}
+          </p>
 
           <div className="mt-10 flex items-baseline gap-3">
-            <span className="font-display text-5xl font-semibold text-chocolate">৳{product.price}</span>
-            <span className="font-body text-sm uppercase tracking-[0.2em] text-chocolate/60">/ {product.weight} tin</span>
+            <span className="font-display text-5xl font-semibold text-chocolate">
+              ৳{product.price}
+            </span>
+            <span className="font-body text-sm uppercase tracking-[0.2em] text-chocolate/60">
+              / {product.weight} tin
+            </span>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <ExtBtn
-              href={instaLink()}
-              onClick={() => {
-                navigator.clipboard.writeText(message);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2500);
-              }}
+            <a
+              href={`/order?product=${encodeURIComponent(product.slug)}&entry=flavor_page`}
+              className="inline-flex items-center justify-center gap-2 rounded-[10px] bg-chocolate px-8 py-3.5 font-body text-sm font-semibold tracking-wide text-white shadow-[0_4px_16px_rgba(71,26,20,0.18)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-caramel hover:shadow-[0_10px_24px_rgba(71,26,20,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-caramel focus-visible:ring-offset-2 focus-visible:ring-offset-blush"
             >
-              <Instagram className="h-4 w-4" strokeWidth={1.8} />
-              {copied ? "Order copied! Opening Instagram..." : "Order on Instagram"}
-            </ExtBtn>
-            <LinkBtn to="/order" variant="secondary">Use the order form</LinkBtn>
+              Order this tin
+            </a>
+            <LinkBtn to="/flavors" variant="secondary">
+              Browse flavours
+            </LinkBtn>
           </div>
 
           <p className="mt-6 font-body text-sm italic text-chocolate/60">
@@ -177,9 +181,13 @@ function ProductPage() {
               className="h-44 w-36 rounded-2xl object-cover shadow-md"
             />
             <div className="flex-1">
-              <h2 className="font-display text-3xl font-semibold text-chocolate md:text-5xl">{other.name}</h2>
+              <h2 className="font-display text-3xl font-semibold text-chocolate md:text-5xl">
+                {other.name}
+              </h2>
               <p className="mt-2 font-display text-lg italic text-caramel">{other.tagline}</p>
-              <p className="mt-3 max-w-lg font-body text-base text-chocolate/75">{other.description}</p>
+              <p className="mt-3 max-w-lg font-body text-base text-chocolate/75">
+                {other.description}
+              </p>
             </div>
             <Link
               to="/flavors/$slug"

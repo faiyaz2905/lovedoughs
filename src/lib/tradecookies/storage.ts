@@ -146,7 +146,10 @@ export function redeemChips(
 
   const amount = Math.floor(takaValue);
   if (amount < MIN_REDEEM_CHIPS) {
-    return { ok: false, reason: `Minimum redeem is ${MIN_REDEEM_CHIPS} chips (৳${MIN_REDEEM_CHIPS}).` };
+    return {
+      ok: false,
+      reason: `Minimum redeem is ${MIN_REDEEM_CHIPS} chips (৳${MIN_REDEEM_CHIPS}).`,
+    };
   }
   if (profile.chips < amount) {
     return { ok: false, reason: "Not enough chips for that coupon." };
@@ -178,9 +181,7 @@ export function getUnusedCoupons(profile: TradeProfile): TradeCoupon[] {
 export function markCouponUsed(profile: TradeProfile, code: string): TradeProfile {
   const next: TradeProfile = {
     ...profile,
-    coupons: profile.coupons.map((c) =>
-      c.code === code ? { ...c, used: true } : c,
-    ),
+    coupons: profile.coupons.map((c) => (c.code === code ? { ...c, used: true } : c)),
   };
   saveProfile(next);
   return next;

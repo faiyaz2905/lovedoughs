@@ -24,10 +24,7 @@ function detectWindow(text: string): TimeWindow {
     /previous\s*day/.test(t) ||
     /last\s*1\s*day/.test(t);
 
-  const has1h =
-    /last\s*(1\s*)?hour/.test(t) ||
-    /past\s*hour/.test(t) ||
-    /last\s*60\s*min/.test(t);
+  const has1h = /last\s*(1\s*)?hour/.test(t) || /past\s*hour/.test(t) || /last\s*60\s*min/.test(t);
 
   const has7d =
     /last\s*7\s*days?/.test(t) ||
@@ -48,7 +45,9 @@ function detectWindow(text: string): TimeWindow {
 function extractCandidates(text: string): number[] {
   const nums = [...text.matchAll(/\b(\d{1,5})\b/g)].map((m) => parseInt(m[1], 10));
   // Filter noise: years, tiny UI chrome
-  return [...new Set(nums.filter((n) => n >= 3 && n <= 20000 && n !== 2024 && n !== 2025 && n !== 2026))];
+  return [
+    ...new Set(nums.filter((n) => n >= 3 && n <= 20000 && n !== 2024 && n !== 2025 && n !== 2026)),
+  ];
 }
 
 function pickSuggested(text: string, candidates: number[]): number | null {

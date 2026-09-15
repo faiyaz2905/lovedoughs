@@ -38,7 +38,8 @@ function Index() {
             <span className="italic">that loves you back.</span>
           </h2>
           <p className="mt-6 max-w-xl font-body text-base text-chocolate/80 md:text-lg">
-            Both tins are 500g of soft, safe-to-eat dough. Heat-treated flour, no raw eggs, real butter. Eat it cold. Or bake it. We won't tell.
+            Both tins are 500g of soft, safe-to-eat dough. Heat-treated flour, no raw eggs, real
+            butter. Eat it cold. Or bake it. We won't tell.
           </p>
         </div>
 
@@ -56,23 +57,38 @@ function Index() {
           <div>
             <SectionLabel>Our (short) story</SectionLabel>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-tight text-chocolate md:text-5xl">
-              Started in a Dhaka kitchen, with one stubborn rolling pin and a soft spot for dessert at midnight.
+              Started in a Dhaka kitchen, with one stubborn rolling pin and a soft spot for dessert
+              at midnight.
             </h2>
             <p className="mt-6 max-w-lg font-body text-lg leading-relaxed text-chocolate/80">
-              We couldn't find a single tin of edible cookie dough in Dhaka — so we made one. Two flavours, a gold tin, a red ribbon, and a recipe we've been quietly perfecting for two years.
+              We couldn't find a single tin of edible cookie dough in Dhaka — so we made one. Two
+              flavours, a gold tin, a red ribbon, and a recipe we've been quietly perfecting for two
+              years.
             </p>
             <div className="mt-8">
-              <LinkBtn to="/story" variant="secondary">Read the long version</LinkBtn>
+              <LinkBtn to="/story" variant="secondary">
+                Read the long version
+              </LinkBtn>
             </div>
           </div>
 
           <div className="relative">
             <div className="absolute -left-6 -top-6 z-10 rotate-[-6deg] rounded-2xl bg-white p-3 shadow-lg">
-              <img src={products[1].imageClosedUrl} alt={products[1].imageAlt} className="h-44 w-36 rounded-xl object-cover" />
-              <p className="mt-2 text-center font-display text-sm italic text-velvet">red velvet, hi.</p>
+              <img
+                src={products[1].imageClosedUrl}
+                alt={products[1].imageAlt}
+                className="h-44 w-36 rounded-xl object-cover"
+              />
+              <p className="mt-2 text-center font-display text-sm italic text-velvet">
+                red velvet, hi.
+              </p>
             </div>
             <div className="relative ml-auto w-[78%] overflow-hidden rounded-3xl bg-blush shadow-xl">
-              <img src={products[0].imageClosedUrl} alt={products[0].imageAlt} className="aspect-[4/5] w-full object-cover" />
+              <img
+                src={products[0].imageClosedUrl}
+                alt={products[0].imageAlt}
+                className="aspect-[4/5] w-full object-cover"
+              />
             </div>
             <HappyStarDoodle className="absolute -bottom-8 -left-6 h-16 w-16 text-gold hidden md:block" />
             <Sparkle className="absolute -bottom-6 right-6 h-10 w-10 text-gold" />
@@ -91,11 +107,14 @@ function Index() {
             <span className="doodle-underline">Birthdays.</span> Apologies. Just-because Tuesdays.
           </h2>
           <p className="mt-6 font-body text-lg text-chocolate/80">
-            Every tin ships gift-ready with a hand-tied red ribbon and a tiny note card with your message. Add a delivery date when you order — we'll handle the rest.
+            Every tin ships gift-ready with a hand-tied red ribbon and a tiny note card with your
+            message. Add a delivery date when you order — we'll handle the rest.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <LinkBtn to="/gift">Send a tin</LinkBtn>
-            <LinkBtn to="/order" variant="secondary">Order for yourself</LinkBtn>
+            <LinkBtn to="/order" variant="secondary">
+              Order for yourself
+            </LinkBtn>
           </div>
         </div>
       </section>

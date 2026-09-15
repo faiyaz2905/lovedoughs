@@ -23,30 +23,57 @@ export function Footer() {
             />
           </div>
           <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-blush/80">
-            Tinned cookie dough, baked with love in a small kitchen in Dhaka.
-            Made in tiny batches. Always tied with a red ribbon. Bangladesh&apos;s
-            first edible cookie dough tin brand.
+            Tinned cookie dough, baked with love in a small kitchen in Dhaka. Made in tiny batches.
+            Always tied with a red ribbon. Bangladesh&apos;s first edible cookie dough tin brand.
           </p>
         </div>
 
         <div>
-          <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-gold">Wander</h4>
+          <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+            Wander
+          </h4>
           <ul className="mt-4 space-y-2 font-body text-base">
-            <li><Link to="/story" className="hover:text-gold">Our Story</Link></li>
-            <li><Link to="/flavors" className="hover:text-gold">Flavors</Link></li>
-            <li><Link to="/gift" className="hover:text-gold">Gift This</Link></li>
-            <li><Link to="/order" className="hover:text-gold">Order</Link></li>
-            <li><a href="/story#faq" className="hover:text-gold">FAQ</a></li>
+            <li>
+              <Link to="/story" className="hover:text-gold">
+                Our Story
+              </Link>
+            </li>
+            <li>
+              <Link to="/flavors" className="hover:text-gold">
+                Flavors
+              </Link>
+            </li>
+            <li>
+              <Link to="/gift" className="hover:text-gold">
+                Gift This
+              </Link>
+            </li>
+            <li>
+              <Link to="/order" className="hover:text-gold">
+                Order
+              </Link>
+            </li>
+            <li>
+              <a href="/story#faq" className="hover:text-gold">
+                FAQ
+              </a>
+            </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-gold">Say hi</h4>
+          <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+            Say hi
+          </h4>
           <ul className="mt-4 space-y-3 font-body text-base">
             <li>
-              <a href={instaLink()} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold">
-                <Instagram className="h-4 w-4" strokeWidth={1.5} />
-                @{INSTAGRAM_HANDLE}
+              <a
+                href={instaLink()}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 hover:text-gold"
+              >
+                <Instagram className="h-4 w-4" strokeWidth={1.5} />@{INSTAGRAM_HANDLE}
               </a>
             </li>
             <li className="text-sm text-blush/70">Dhaka, Bangladesh</li>

@@ -21,7 +21,12 @@ type BtnProps = {
   children: ReactNode;
 };
 
-export function Btn({ variant = "primary", className = "", children, ...rest }: BtnProps & ComponentProps<"button">) {
+export function Btn({
+  variant = "primary",
+  className = "",
+  children,
+  ...rest
+}: BtnProps & ComponentProps<"button">) {
   return (
     <button className={`${base} ${variants[variant]} ${className}`} {...rest}>
       {children}
@@ -29,7 +34,12 @@ export function Btn({ variant = "primary", className = "", children, ...rest }: 
   );
 }
 
-export function LinkBtn({ to, variant = "primary", className = "", children }: BtnProps & { to: string }) {
+export function LinkBtn({
+  to,
+  variant = "primary",
+  className = "",
+  children,
+}: BtnProps & { to: string }) {
   return (
     <Link to={to} className={`${base} ${variants[variant]} ${className}`}>
       {children}
@@ -37,9 +47,21 @@ export function LinkBtn({ to, variant = "primary", className = "", children }: B
   );
 }
 
-export function ExtBtn({ href, variant = "primary", className = "", children, ...rest }: BtnProps & ComponentProps<"a">) {
+export function ExtBtn({
+  href,
+  variant = "primary",
+  className = "",
+  children,
+  ...rest
+}: BtnProps & ComponentProps<"a">) {
   return (
-    <a href={href} target="_blank" rel="noreferrer" className={`${base} ${variants[variant]} ${className}`} {...rest}>
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className={`${base} ${variants[variant]} ${className}`}
+      {...rest}
+    >
       {children}
     </a>
   );

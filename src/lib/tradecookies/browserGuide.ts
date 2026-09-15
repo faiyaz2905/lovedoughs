@@ -125,7 +125,9 @@ const GUIDES: Record<BrowserKind, BrowserGuide> = {
   },
 };
 
-export function getBrowserGuide(ua = typeof navigator !== "undefined" ? navigator.userAgent : ""): BrowserGuide {
+export function getBrowserGuide(
+  ua = typeof navigator !== "undefined" ? navigator.userAgent : "",
+): BrowserGuide {
   return GUIDES[detectKind(ua)];
 }
 

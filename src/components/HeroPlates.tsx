@@ -72,7 +72,8 @@ export function HeroPlates() {
       />
 
       {/* Tiny scattered dots for warmth */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.04]"
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage: "radial-gradient(circle, #471A14 1px, transparent 1px)",
           backgroundSize: "28px 28px",
@@ -86,8 +87,8 @@ export function HeroPlates() {
         <div className="sr-only">
           <h1>Edible cookie dough tins, made in Dhaka</h1>
           <p>
-            Bangladesh&apos;s first scoopable cookie dough in a ribbon-tied gold tin.
-            Two flavours. Tiny batches. Gift-ready.
+            Bangladesh&apos;s first scoopable cookie dough in a ribbon-tied gold tin. Two flavours.
+            Tiny batches. Gift-ready.
           </p>
         </div>
 
@@ -146,9 +147,7 @@ export function HeroPlates() {
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 font-body text-xs uppercase text-chocolate/40"
       >
         <span className="h-px w-8 bg-chocolate/20" />
-        <span className="tracking-[0.28em] mr-[-0.28em] leading-none">
-          tap to explore
-        </span>
+        <span className="tracking-[0.28em] mr-[-0.28em] leading-none">tap to explore</span>
         <span className="h-px w-8 bg-chocolate/20" />
       </motion.div>
     </section>
@@ -226,7 +225,11 @@ function PlateLink({
       initial={{ opacity: 0, scale: 0.85 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 + staggerIndex * 0.12 }}
-      whileHover={!revealed ? { scale: 1.06, y: -6, transition: { type: "spring", stiffness: 300, damping: 20 } } : undefined}
+      whileHover={
+        !revealed
+          ? { scale: 1.06, y: -6, transition: { type: "spring", stiffness: 300, damping: 20 } }
+          : undefined
+      }
       whileTap={!revealed ? { scale: 0.97 } : undefined}
       aria-label={`${item.label} — click to navigate`}
     >

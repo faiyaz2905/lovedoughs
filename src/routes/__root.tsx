@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -11,13 +12,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import {
-  SITE_URL,
-  SITE_NAME,
-  DEFAULT_OG_IMAGE,
-  jsonLdScript,
-} from "../lib/site";
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE, jsonLdScript } from "../lib/site";
 import { organizationSchema, websiteSchema } from "../lib/schema";
+import { captureOrderAttribution } from "../lib/orders/attribution";
 
 function NotFoundComponent() {
   return (
@@ -94,9 +91,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { name: "author", content: SITE_NAME },
       { name: "theme-color", content: "#FED2C7" },
-      ...(gscToken
-        ? [{ name: "google-site-verification", content: gscToken }]
-        : []),
+      ...(gscToken ? [{ name: "google-site-verification", content: gscToken }] : []),
       { property: "og:title", content: "Cookie Dough Tins in Dhaka | Love Doughs" },
       {
         property: "og:description",
@@ -129,9 +124,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
       },
     ],
-    scripts: [
-      jsonLdScript([organizationSchema(), websiteSchema()]),
-    ],
+    scripts: [jsonLdScript([organizationSchema(), websiteSchema()])],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -158,8 +151,19 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <OrderAttributionCapture />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
   );
+}
+
+function OrderAttributionCapture() {
+  const location = useLocation();
+
+  useEffect(() => {
+    captureOrderAttribution();
+  }, [location.pathname, location.search]);
+
+  return null;
 }
