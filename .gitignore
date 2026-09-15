@@ -21,6 +21,9 @@ dist-ssr
 !.env.example
 .envrc
 
+# Local credential material (for example, Google service-account keys)
+/ignore/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

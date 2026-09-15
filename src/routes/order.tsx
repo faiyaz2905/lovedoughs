@@ -8,6 +8,7 @@ import { PageShell } from "@/components/PageShell";
 import { SectionLabel } from "@/components/SectionLabel";
 import { submitOrder } from "@/lib/api/orders.functions";
 import { captureOrderAttribution } from "@/lib/orders/attribution";
+import { countWords, limitToWordCount, TIN_NOTE_WORD_LIMIT } from "@/lib/orders/tin-note";
 import { instaLink, INSTAGRAM_HANDLE, products } from "@/lib/products";
 import { absoluteUrl, canonicalLink, DEFAULT_OG_IMAGE, DHAKA_AREAS } from "@/lib/site";
 import { getUnusedCoupons, loadProfile } from "@/lib/tradecookies/storage";
@@ -78,6 +79,7 @@ function OrderPage() {
   const [requestId] = useState(createRequestId);
   const product = products.find((p) => p.slug === slug)!;
   const total = product.price * qty;
+  const noteWordCount = countWords(note);
 
   useEffect(() => {
     if (search.product) setSlug(search.product);
@@ -225,14 +227,18 @@ function OrderPage() {
                 ))}
               </datalist>
             </Field>
-            <Field label="Note for the tin (optional)">
+            <Field label={`Note for the tin (optional, up to ${TIN_NOTE_WORD_LIMIT} words)`}>
               <textarea
                 value={note}
-                onChange={(event) => setNote(event.target.value)}
+                onChange={(event) => setNote(limitToWordCount(event.target.value))}
                 rows={3}
                 placeholder="Happy birthday, Mishu!"
                 className={`${inputCx} resize-y`}
+                aria-describedby="tin-note-word-count"
               />
+              <p id="tin-note-word-count" className="mt-2 font-body text-xs text-chocolate/60">
+                {noteWordCount} of {TIN_NOTE_WORD_LIMIT} words
+              </p>
             </Field>
             <Field label="How did you hear about Love Doughs? (optional)">
               <input

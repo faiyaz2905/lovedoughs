@@ -3,10 +3,19 @@ import { getRequestHeader, setResponseHeader } from "@tanstack/react-start/serve
 import { z } from "zod";
 
 import { appendOrderToGoogleSheet } from "../orders/orders.server";
+import { countWords, TIN_NOTE_WORD_LIMIT } from "../orders/tin-note";
 import { productBySlug } from "../products";
 
 const requiredText = (maxLength: number) => z.string().trim().min(1).max(maxLength);
 const optionalText = (maxLength: number) => z.string().trim().max(maxLength).default("");
+const optionalTinNote = z
+  .string()
+  .trim()
+  .max(1_000)
+  .refine((value) => countWords(value) <= TIN_NOTE_WORD_LIMIT, {
+    message: `Tin notes can be up to ${TIN_NOTE_WORD_LIMIT} words.`,
+  })
+  .default("");
 
 const orderSubmissionSchema = z.object({
   requestId: z.string().uuid(),
@@ -14,7 +23,7 @@ const orderSubmissionSchema = z.object({
   quantity: z.number().int().min(1).max(20),
   customerName: requiredText(100),
   deliveryArea: requiredText(160),
-  note: optionalText(1_000),
+  note: optionalTinNote,
   couponCode: optionalText(100),
   heardFrom: optionalText(160),
   website: optionalText(200),
